@@ -34,10 +34,6 @@ Integration testing for the frontend is recommended.
 - Maintain consistent code comments and variable naming.
 - Document APIs in a Markdown file or similar format.
 
-### Entity-Relationship (ER) Diagram
-
-![ER-diagram](./ER-model/ER-diagram%20model.png)
-
 ### Backend Files
 
 #### API/Presentation Layer (Controllers)
