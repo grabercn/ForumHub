@@ -25,7 +25,7 @@ import Cart from './Cart';
 import Searchbar from './Searchbar';
 import AdminTools from './AdminTools';
 import { checkCookie, checkAuth, checkName } from './Helpers/auth';
-import {productsData} from './Objects/productsData.objects';
+import {productsData as forumsData} from './Objects/productsData.objects';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import UserProfile from './Auth/UserProfile';
 
@@ -59,7 +59,7 @@ function ResponsiveAppBar() {
     window.location.reload()
   };
 
-  var products = productsData;
+  var forums = forumsData;
   var userName = checkName();
 
   // List of settings
@@ -134,7 +134,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            eCommerce
+            ForumHub
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -190,7 +190,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            Owen Edwards
+            ForumHub
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
