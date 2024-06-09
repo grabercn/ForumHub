@@ -5,7 +5,7 @@ import ProductList from "./ProductList";
 import ResponsiveAppBar from "./Navbar";
 import Container from '@mui/material/Container';
 import { Grid } from '@mui/material';
-import { productsData } from "./Objects/productsData.objects";
+import { productsData as forumsData } from "./Objects/productsData.objects";
 
 const theme = createTheme({
   typography: {
@@ -14,33 +14,33 @@ const theme = createTheme({
 });
 
 const Home = () => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [products, setProducts] = useState(productsData); // Initialize products with productsData
+  const [selectedForum, setSelectedForum] = useState(null);
+  const [forums, setForums] = useState(forumsData); // Initialize products with productsData
 
   function handleProductClick(product) {
-    setSelectedProduct(product);
+    setSelectedForum(product);
   }
 
   // useEffect to update productList whenever products change
   useEffect(() => {
-    setProducts(productsData); // Update products with the latest data from productsData
-  }, [productsData]);
+    setForums(forumsData); // Update products with the latest data from productsData
+  }, [forumsData]);
 
   return (
     <ThemeProvider theme={theme}>
       <div>
         <ResponsiveAppBar /> {/* Include the Navbar component */}
         
-        <h1>Welcome to Our E-commerce Site</h1>
-        <p>Click on a product to view more details</p>
+        <h1>Welcome to ForumHub</h1>
+        <p>Click on a forum to view it.</p>
         <br />
 
         <Container maxWidth="page"> {/* Wrap the content in a Container component */}
           <Grid container spacing={2}>
-            {Object.values(products).length === 0 ? (
-              <p>No Products Available</p>
+            {Object.values(forums).length === 0 ? (
+              <p>No Forums Avaliable</p>
             ) : (
-              Object.values(products).map((product) => (
+              Object.values(forums).map((product) => (
                 <Grid item xs={12} md={2} key={product.id}>
                   <div className="product-list-wrapper" style={{ overflowWrap: 'break-word' }}>
                     {/* Include the ProductList component */}
@@ -50,7 +50,7 @@ const Home = () => {
               ))
             )}
             <Grid item xs={12} md={6}>
-              {selectedProduct && <ProductDetail product={selectedProduct} />}
+              {selectedForum && <ProductDetail product={selectedForum} />}
             </Grid>
           </Grid>
         </Container>
