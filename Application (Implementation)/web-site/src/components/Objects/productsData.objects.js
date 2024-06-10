@@ -1,5 +1,5 @@
 // Dummy product data (replace with your actual product data)
-import { getAllProducts } from "../Helpers/productApiCalls";
+import { getAllProducts } from "../Helpers/forumApiCalls";
 
 
 /*

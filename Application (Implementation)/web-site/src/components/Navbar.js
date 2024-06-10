@@ -17,23 +17,20 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import BrandIcon from '@mui/icons-material/LocalGroceryStore';
+import HubOutlinedIcon from '@mui/icons-material/HubOutlined';
 import Login from './Auth/Login';
 import Logout from './Auth/Logout';
 import { Dialog } from '@mui/material';
-import Cart from './Cart';
 import Searchbar from './Searchbar';
 import AdminTools from './AdminTools';
 import { checkCookie, checkAuth, checkName } from './Helpers/auth';
 import {productsData as forumsData} from './Objects/productsData.objects';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import UserProfile from './Auth/UserProfile';
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [showLogin, setShowLogin] = React.useState(false);
-  const [showCart, setShowCart] = React.useState(false);
   const [showAuth, setShowAuth] = React.useState(false);
   const [showAbout, setShowAbout] = React.useState(false);
   const [showUserProfile, setShowUserProfile] = React.useState(false);
@@ -92,7 +89,6 @@ function ResponsiveAppBar() {
       // Show the logout component
       setShowLogin(true);
     } else if (selectedButton === 'User Profile') {
-      // Redirect to the cart page
       setShowUserProfile(true);
     }
   };
@@ -118,7 +114,7 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <BrandIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <HubOutlinedIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -173,7 +169,7 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <BrandIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <HubOutlinedIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -208,18 +204,6 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0, ml: 2 }}>
             <Searchbar/>
           </Box> 
-
-          {/* Add blank space */}
-          <Box sx={{ flexGrow: 0, width: '16px' }}></Box>
-
-          {/* show the cart button */}
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open cart">
-              <IconButton onClick={() => setShowCart(true)} sx={{ p: 0 }}>
-                <ShoppingCartIcon />
-              </IconButton>
-            </Tooltip>
-          </Box>
 
           {/* Add blank space */}
           <Box sx={{ flexGrow: 0, width: '16px' }}></Box>
@@ -265,14 +249,6 @@ function ResponsiveAppBar() {
           </Dialog>
         </>
       )}
-      {/* Show cart component */}
-      {showCart && (
-        <>
-          <Dialog open={showCart} onClose={() => setShowCart(false)}>
-            <Cart />
-          </Dialog>
-        </>
-      )}
       {/* Show the admin tools */}
       {showAuth && (
         <>
@@ -287,10 +263,10 @@ function ResponsiveAppBar() {
             About
           </Typography>
           <Typography variant="body1" align="center">
-            This is a simple eCommerce application built using React and Material-UI.
+            ForumHub Application
           </Typography>
           <Typography variant="body1" align="center">
-            Created by Elias Weitfle, Owen Edwards, and Christian Graber
+            Created by Christian Graber based off DDD Project.
           </Typography>
         </Dialog>
       )}

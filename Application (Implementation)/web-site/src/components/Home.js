@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import ProductDetail from "./ProductDetail"; // Assuming this is the correct import for ProductDetail
-import ProductList from "./ProductList";
+import ProductDetail from "./ForumDetail"; // Assuming this is the correct import for ProductDetail
+import ForumList from "./ForumList";
 import ResponsiveAppBar from "./Navbar";
 import Container from '@mui/material/Container';
 import { Grid } from '@mui/material';
@@ -17,8 +17,8 @@ const Home = () => {
   const [selectedForum, setSelectedForum] = useState(null);
   const [forums, setForums] = useState(forumsData); // Initialize products with productsData
 
-  function handleProductClick(product) {
-    setSelectedForum(product);
+  function handleForumClick(forum) {
+    setSelectedForum(forum);
   }
 
   // useEffect to update productList whenever products change
@@ -40,11 +40,11 @@ const Home = () => {
             {Object.values(forums).length === 0 ? (
               <p>No Forums Avaliable</p>
             ) : (
-              Object.values(forums).map((product) => (
-                <Grid item xs={12} md={2} key={product.id}>
+              Object.values(forums).map((forum) => (
+                <Grid item xs={12} md={2} key={forum.id}>
                   <div className="product-list-wrapper" style={{ overflowWrap: 'break-word' }}>
                     {/* Include the ProductList component */}
-                    <ProductList products={[product]} onProductClick={handleProductClick} />
+                    <ForumList forums={[forum]} onProductClick={handleForumClick} />
                   </div>
                 </Grid>
               ))

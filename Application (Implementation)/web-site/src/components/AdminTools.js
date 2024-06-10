@@ -3,12 +3,12 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import { Grid} from '@mui/material';
-import ProductDetail from './ProductDetail';
-import ProductList from './ProductList';
+import ProductDetail from './ForumDetail';
+import ProductList from './ForumList';
 import Container from '@mui/material/Container';
 import Dialog from '@mui/material/Dialog';
 import { productsData } from './Objects/productsData.objects';
-import { createProduct, getAllProducts, deleteProductById } from './Helpers/productApiCalls';
+import { createProduct, getAllProducts, deleteProductById } from './Helpers/forumApiCalls';
 
 const AdminTools = () => {
 
@@ -99,7 +99,7 @@ const AdminTools = () => {
                         <Grid item xs={12} md={4} key={product.id}>
                             <div className="product-list-wrapper" style={{ overflowWrap: 'break-word' }}>
                             {/* Include the ProductList component */}
-                            <ProductList showCartButton={false} products={[product]} onProductClick={handleProductClick} />
+                            <ProductList showCartButton={false} forums={[product]} onProductClick={handleProductClick} />
                             </div>
                         </Grid>
                         ))}

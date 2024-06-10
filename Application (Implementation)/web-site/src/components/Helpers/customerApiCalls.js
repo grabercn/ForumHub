@@ -6,19 +6,6 @@ const customerObject = {
     name: 'Owen'
 };
 
-const addressObject = {
-    addressType: 'Delivery',
-    streetAddress: 'Wall Street',
-    city: 'New York',
-    state: 'New York',
-    zipCode: '10004'
-};
-
-const creditCardObject = {
-    cardNumber: '838025628908905',
-    expirationDate: '2010-04-20' // YYYY-MM-DD
-};
-
 async function createCustomer(customerObject) {
     const url = 'http://localhost:8080/api/customers';
     try {

@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import AppCard from './AppCard';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import ProductDetail from './ProductDetail';
+import ProductDetail from './ForumDetail';
 
 const ProductList = ({ products, onProductClick, showCartButton }) => {
   const [open, setOpen] = React.useState(false);

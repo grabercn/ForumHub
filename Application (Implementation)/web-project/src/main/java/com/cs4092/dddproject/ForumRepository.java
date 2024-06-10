@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-// Use JpaRepository<Supplier, Long> from private Long id; from Supplier.java
-public interface SupplierRepository extends JpaRepository<Supplier, Long> {
+// Use JpaRepository<Product, Long> from private Long id; from Product.java
+public interface ForumRepository extends JpaRepository<Forum, Long> {
 }

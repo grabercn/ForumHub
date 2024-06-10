@@ -6,45 +6,33 @@ import org.springframework.stereotype.Service;
 @Service
 public class StaffMemberService {
     private final StaffMemberRepository staffMemberRepository;
-    private final ProductService productService;
-    private final OrderService orderService;
+    private final ForumService forumService;
     private final CustomerService customerService;
 
     // Dependency injection
     @Autowired
     public StaffMemberService(StaffMemberRepository staffMemberRepository,
-                              ProductService productService,
-                              OrderService orderService,
+                              ForumService forumService,
                               CustomerService customerService) {
         this.staffMemberRepository = staffMemberRepository;
-        this.productService = productService;
-        this.orderService = orderService;
+        this.forumService = forumService;
         this.customerService = customerService;
     }
 
-    // Create a new product
-    public Product createProduct(Product product) {
-        return productService.createProduct(product);
+    // Create a new forum
+    public Forum createForum(Forum forum) {
+        return forumService.createForum(forum);
     }
 
-    // Update an existing product
-    public Product updateProcuct(Product product) { return productService.updateProduct(product); }
+    /*
+    // Update an existing forum
+    public Forum updateForum(Forum forum) { return forumService.updateForum(forum); }
 
-    // Delete an existing product
-    public void deleteProduct(long productId) { productService.deleteProduct(productId); }
-
-    // Process an order (assuming OrderService handles details)
-    public void processOrder(Order order, Long targetWarehouseId) {
-        orderService.processOrder(order, targetWarehouseId);
-    }
-
-    // Update quantity/availability of a product
-    public void updateInventory(Long productId, int quantityChange, Long targetWarehouseId) {
-        productService.updateInventory(productId, quantityChange, targetWarehouseId);
-    }
+    // Delete an existing forum
+    public void deleteForum(long forumId) { forumService.deleteForum(forumId); }
 
     // View customer information by ID (assuming CustomerService handles details)
     public Customer getCustomerById(Long customerId) {
         return customerService.getCustomerById(customerId);
-    }
+    } */
 }
