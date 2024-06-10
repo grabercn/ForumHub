@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "Customer") // Specify the table name
 @Data
@@ -26,4 +28,5 @@ public class Customer {
 
     @Column(name = "email", nullable = false) // Map to the email column
     private String email;
+    
 }

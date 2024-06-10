@@ -1,7 +1,10 @@
 package com.cs4092.dddproject;
 
+import jakarta.validation.constraints.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class StaffMemberService {
@@ -22,6 +25,22 @@ public class StaffMemberService {
     // Create a new forum
     public Forum createForum(Forum forum) {
         return forumService.createForum(forum);
+    }
+
+    public List<StaffMember> getAllStaffMembers() {
+        return staffMemberRepository.findAll();
+    }
+
+    public StaffMember saveStaffMember(StaffMember staffMember) {
+        return staffMemberRepository.save(staffMember);
+    }
+
+    public StaffMember getStaffMemberById(Long staffMemberId) {
+        return staffMemberRepository.findById(staffMemberId).orElse(null);
+    }
+
+    public StaffMember updateStaffMember(StaffMember staffMember) {
+        return staffMemberRepository.save(staffMember);
     }
 
     /*

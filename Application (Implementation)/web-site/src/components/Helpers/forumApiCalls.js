@@ -1,24 +1,21 @@
 // This is a simple example of how to make an API call using the Fetch API. This example fetches data from an API endpoint and logs the retrieved data to the console.
 
-// This is the product data object that will be sent to the API endpoint
-const productObject = {
-    category: 'shoes',
-    productName: 'Product 1',
-    brand: 'Brand X',
-    size: 'Big',
-    description: 'This is product 1',
-    price: 10.00
+// This is the forum data object that will be sent to the API endpoint
+const forumObject = {
+    category: 'Shoes',
+    forum_name: 'Shoe Land',
+    forum_description: 'Land of shoes and more shoes',
 };
 
-async function createProduct(productObject) {
-    const url = 'http://localhost:8080/api/products';
+async function createForum(forumObject) {
+    const url = 'http://localhost:8080/api/forums';
     try {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(productObject) // Body expects JSON string
+            body: JSON.stringify(forumObject) // Body expects JSON string
         });
 
         if (!response.ok) {
@@ -26,15 +23,15 @@ async function createProduct(productObject) {
         }
 
         const data = await response.json();
-        console.log("Product created successfully:", data);
+        console.log("Forum created successfully:", data);
     }
     catch(error) {
-        console.error("Error creating product:", error);
+        console.error("Error creating forum:", error);
     }
 }
 
-async function getAllProducts() {
-    const url = 'http://localhost:8080/api/products';
+async function getAllForums() {
+    const url = 'http://localhost:8080/api/forums';
     try {
         const response = await fetch(url, {
             method: 'GET'
@@ -45,17 +42,17 @@ async function getAllProducts() {
         }
 
         const data = await response.json();
-        console.log("Products:", data);
+        console.log("Forums:", data);
         return data;
     }
     catch(error) {
-        console.error("Error retrieving products:", error);
+        console.error("Error retrieving forums:", error);
     }
 }
 
-async function getProductById(productId) {
-    // Construct the URL with the productId variable
-    const url = `http://localhost:8080/api/products/${productId}`;
+async function getForumById(forumId) {
+    // Construct the URL with the forumId variable
+    const url = `http://localhost:8080/api/forums/${forumId}`;
     try {
         const response = await fetch(url, {
             method: 'GET'
@@ -66,16 +63,16 @@ async function getProductById(productId) {
         }
 
         const data = await response.json();
-        console.log("Product:", data);
+        console.log("Forum:", data);
     }
     catch(error) {
-        console.error("Error retrieving product:", error);
+        console.error("Error retrieving forum:", error);
     }
 }
 
-async function getProductByName(productName) {
-    // Construct the URL with the productName variable
-    const url = `http://localhost:8080/api/products/search?name=${productName}`;
+async function getForumByName(forumName) {
+    // Construct the URL with the forumName variable
+    const url = `http://localhost:8080/api/forums/search?name=${forumName}`;
     try {
         const response = await fetch(url, {
         method: 'GET'
@@ -86,35 +83,35 @@ async function getProductByName(productName) {
         }
 
         const data = await response.json();
-        console.log("Product:", data);
+        console.log("Forum:", data);
     }
     catch(error) {
-        console.error("Error retrieving product:", error);
+        console.error("Error retrieving forum:", error);
     }
 }
 
-// Parameters on updateProduct() explained:
-// productId: the productId we're updating with new data (via PUT request)
-// productObject: the JavaScript object representing new data we're putting in place of the old data
-async function updateProductById(productId, productObject) {
-    // Changing the productObject being PUT/updated
-    productObject = {
+// Parameters on updateForum() explained:
+// forumId: the forumId we're updating with new data (via PUT request)
+// forumObject: the JavaScript object representing new data we're putting in place of the old data
+async function updateForumById(forumId, forumObject) {
+    // Changing the forumObject being PUT/updated
+    forumObject = {
         category: 'shirt',
-        productName: 'Product 2',
+        forumName: 'Forum 2',
         brand: 'Brand Y',
         size: 'Medium',
-        description: 'This is product 2',
+        description: 'This is forum 2',
         price: 40.00
     }
-    // Construct the URL with the productId variable
-    const url = `http://localhost:8080/api/products/${productId}`;
+    // Construct the URL with the forumId variable
+    const url = `http://localhost:8080/api/forums/${forumId}`;
     try {
         const response = await fetch(url, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json' // Set content type to JSON
             },
-            body: JSON.stringify(productObject) // Body expects JSON string
+            body: JSON.stringify(forumObject) // Body expects JSON string
         });
 
         if (!response.ok) {
@@ -122,16 +119,16 @@ async function updateProductById(productId, productObject) {
         }
 
         const data = await response.json();
-        console.log("Product updated successfully:", data);
+        console.log("Forum updated successfully:", data);
     }
     catch(error) {
-        console.error("Error updating product:", error);
+        console.error("Error updating forum:", error);
     }
 }
 
-async function deleteProductById(productId) {
-    // Construct the URL with the productId variable
-    const url = `http://localhost:8080/api/products/${productId}`;
+async function deleteForumById(forumId) {
+    // Construct the URL with the forumId variable
+    const url = `http://localhost:8080/api/forums/${forumId}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE'
@@ -141,17 +138,17 @@ async function deleteProductById(productId) {
             throw new Error(`API call failed with status ${response.status}`);
         }
 
-        console.log("Product deleted successfully"); // Assuming successful deletion doesn't require a response body
+        console.log("Forum deleted successfully"); // Assuming successful deletion doesn't require a response body
     }
     catch(error) {
-        console.error("Error deleting product:", error);
+        console.error("Error deleting forum:", error);
     }
 }
 
 // TODO: validate with a non-null Stock (requires call to updateInventory() to update quantity on Stock)
-async function getProductAvailability(productId, quantity) {
-    // Construct the URL with the productId and quantity variables
-    const url = `http://localhost:8080/api/products/${productId}/availability?quantity=${quantity}`;
+async function getForumAvailability(forumId, quantity) {
+    // Construct the URL with the forumId and quantity variables
+    const url = `http://localhost:8080/api/forums/${forumId}/availability?quantity=${quantity}`;
     try {
         const response = await fetch(url, {
         method: 'GET'
@@ -172,21 +169,21 @@ async function getProductAvailability(productId, quantity) {
 // TODO: make a way to create a Warehouse entity in the database (probably through staffMemberApiCalls.js)
 // TODO: then use this Warehouse entity to update the quantity changed
 // QUESTION: do we blow away Warehouse???
-async function updateInventory(productId, warehouseId, quantityChange) {
+async function updateInventory(forumId, warehouseId, quantityChange) {
     
 }
 
 // Export the functions to be used in other files
-export { createProduct, getAllProducts, getProductById, getProductByName, updateProductById, deleteProductById};
+//export { createForum, getAllForums, getForumById, getForumByName, updateForumById, deleteForumById};
 
 
 // Usage examples
 
-//createProduct(productObject);
-//getAllProducts();
-//getProductById(1);
-//getProductByName("Product 1");
-//updateProductById(1, productObject);
-//deleteProductById(1);
-//getProductAvailability(1, 0);
+createForum(forumObject);
+//getAllForums();
+//getForumById(1);
+//getForumByName("Forum 1");
+//updateForumById(1, forumObject);
+//deleteForumById(1);
+//getForumAvailability(1, 0);
 //updateInventory(1, 1, 5);
