@@ -1,3 +1,4 @@
+import { getCustomerById } from "../Helpers/customerApiCalls";
 import { getAllPosts } from "../Helpers/postApiCalls";
 
 // Get all postsData
@@ -9,4 +10,13 @@ try{
     postsData = ["Failed to fetch post data"];
 }
 
+
+//Make local modifications to the postsData object 
+
+//get and add post author name using customer id
+postsData.forEach(post => {
+    post.CustomerName = getCustomerById(Number(post.customerId)).name;
+});
+
+console.log("PostsData:", postsData);
 export {postsData};

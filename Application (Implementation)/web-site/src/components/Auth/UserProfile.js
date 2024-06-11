@@ -1,5 +1,5 @@
 import React from 'react';
-import { checkName, checkAuth, checkCookie } from '../Helpers/auth';
+import { checkName, checkAuth, checkCookie } from '../Helpers/authApiCalls';
 import { Container } from '@mui/material';
 
 const UserProfile = () => {

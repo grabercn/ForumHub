@@ -30,8 +30,32 @@ async function createCustomer(customerObject) {
   }
 }
 
+// find a customer by id
+async function getCustomerById(customerId) {
+    // Construct the URL with the customerId variable
+    const url = `http://localhost:8080/api/customers/${customerId}`;
+    try {
+        const response = await fetch(url, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            throw new Error(`API call failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Customer:", data);
+        return data;
+    }
+    catch(error) {
+        console.error("Error retrieving customer:", error);
+    }
+}
+
+
 // Export the functions to be used in other files
-export { createCustomer };
+export { createCustomer, getCustomerById };
 
 //createCustomer(customerObject);
+//getCustomerById(1);
 

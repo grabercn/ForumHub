@@ -7,69 +7,68 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PostService {
-    private final PostRepository postRepository;
+public class CommentService {
+    private final CommentRepository commentRepository;
 
     // Dependency injection
     @Autowired
-    public PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
+    public CommentService(CommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
     }
 
-    // Create a new post
-    public Post createPost(Post post) {
-        return postRepository.save(post); // Save the post
+    // Create a new comment
+    public Comment createComment(Comment comment) {
+        return commentRepository.save(comment); // Save the comment
     }
 
-    // Get a post by ID
-    public Post getPostById(Long postId) {
-        return postRepository.findById(postId).orElse(null); // Find by ID, return null if not found
+    // Get a comment by ID
+    public Comment getCommentById(Long commentId) {
+        return commentRepository.findById(commentId).orElse(null); // Find by ID, return null if not found
     }
 
-    // Update an existing post
-    public Post updatePost(Post post) {
-        // Check if post exists first
-        Post existingPost = postRepository.findById(post.getPostId()).orElse(null);
-        if (existingPost == null) {
-            throw new IllegalArgumentException("Post with ID: " + post.getPostId() + " not found.");
+    // Update an existing comment
+    public Comment updateComment(Comment comment) {
+        // Check if comment exists first
+        Comment existingComment = commentRepository.findById(comment.getCommentId()).orElse(null);
+        if (existingComment == null) {
+            throw new IllegalArgumentException("Comment with ID: " + comment.getCommentId() + " not found.");
         }
 
         // Update relevant fields (excluding ID)
 
-        existingPost.setPostSubject(post.getPostSubject());
-        existingPost.setPostText(post.getPostText());
+        existingComment.setCommentText(comment.getCommentText());
 
-        // Save the updated post
-        return postRepository.save(existingPost);
+        // Save the updated comment
+        return commentRepository.save(existingComment);
     }
 
-    // Get all posts
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
+    // Get all comments
+    public List<Comment> getAllComments() {
+        return commentRepository.findAll();
     }
 
-    // Get a post by name
-    public Post getPostBySubject(String postSubject) {
-        List<Post> allPosts = postRepository.findAll();
+    // Get a comment by name
+    public Comment getCommentBySubject(String commentText) {
+        List<Comment> allComments = commentRepository.findAll();
 
-        // Filter posts by name
-        List<Post> postsWithSubject = allPosts.stream()
-                .filter(post -> post.getPostSubject().equalsIgnoreCase(postSubject))
+        // Filter comments by name
+        List<Comment> commentsWithSubject = allComments.stream()
+                .filter(comment -> comment.getCommentText().equalsIgnoreCase(commentText))
                 .toList();
 
-        // Return the first post found, or null if not found
-        return postsWithSubject.isEmpty() ? null : postsWithSubject.get(0);
+        // Return the first comment found, or null if not found
+        return commentsWithSubject.isEmpty() ? null : commentsWithSubject.get(0);
     }
 
-    // Delete a post (hard deletion)
-    public void deletePost(Long postId) {
-        Post post = postRepository.findById(postId).orElse(null);
-        if (post == null) {
-            throw new IllegalArgumentException("Post with ID: " + postId + " not found.");
+    // Delete a comment (hard deletion)
+    public void deleteComment(Long commentId) {
+        Comment comment = commentRepository.findById(commentId).orElse(null);
+        if (comment == null) {
+            throw new IllegalArgumentException("Comment with ID: " + commentId + " not found.");
         }
 
         // Perform hard deletion using the repository
-        postRepository.deleteById(postId);
+        commentRepository.deleteById(commentId);
     }
 
 }

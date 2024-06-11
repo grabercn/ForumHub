@@ -68,8 +68,29 @@ const removePost = async (postId, forumId) => {
     }
 }
 
+// get post by id
+const getPostById = async (postId) => {
+    const url = `http://localhost:8080/api/posts/${postId}`;
+    try {
+        const response = await fetch(url, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            throw new Error(`API call failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Post:", data);
+        return data;
+    }
+    catch(error) {
+        console.error("Error retrieving post:", error);
+    }
+}
+
 //addPost(postObject);
 //getAllPosts();
 //removePost(1);
 
-export { addPost, getAllPosts, removePost };
+export { addPost, getAllPosts, removePost, getPostById };

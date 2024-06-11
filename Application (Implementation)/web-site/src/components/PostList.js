@@ -1,6 +1,7 @@
 import React from 'react';
 import { postsData } from './Objects/postsData.object';
-import { addPost } from './Helpers/postApiCalls';
+import { addPost, getPostById } from './Helpers/postApiCalls';
+import { getCustomerById } from './Helpers/customerApiCalls';
 
 function PostList() {
 
@@ -41,13 +42,14 @@ function PostList() {
 
     return (
         <div>
-            {/* Display the list of posts */}
             <h3>Posts:</h3>
             <ul>
                 {posts.map((post) => (
                     <li key={post.postId}>
                         <div style={{ border: '1px solid black', padding: '10px', marginBottom: '10px' }}>
+                            <p style={{ fontSize: '12px', fontStyle: 'italic' }}>{post.CustomerName}</p>
                             <h4 style={{ fontWeight: 'bold' }}>{post.postSubject}</h4>
+                            <hr />
                             <p style={{ fontSize: '14px' }}>{post.postText}</p>
                         </div>
                     </li>

@@ -26,23 +26,6 @@ public class CustomerController {
         return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
     }
 
-    /*
-    // Update an existing password for a customer by ID
-    @PutMapping("/{customerId}/addresses/{addressId}")
-    public ResponseEntity<Customer> updateAddress(@PathVariable Long customerId, @Valid @RequestBody Address updatedAddress) {
-        Customer customer = customerService.getCustomerById(customerId);
-        if (customer == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        try {
-            customerService.updateAddress(customer, updatedAddress);
-            return new ResponseEntity<>(customerService.getCustomerById(customerId), HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            // TODO: add message for exception
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    } */
-
     // Find a customer by ID
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {

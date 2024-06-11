@@ -23,7 +23,7 @@ import Logout from './Auth/Logout';
 import { Dialog } from '@mui/material';
 import Searchbar from './Searchbar';
 import AdminTools from './AdminTools';
-import { checkCookie, checkAuth, checkName } from './Helpers/auth';
+import { checkCookie, checkAuth, checkName } from './Helpers/authApiCalls';
 import {forumsData as forumsData} from './Objects/forumsData.objects';
 import UserProfile from './Auth/UserProfile';
 

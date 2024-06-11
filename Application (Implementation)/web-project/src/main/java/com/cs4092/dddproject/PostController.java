@@ -20,14 +20,14 @@ public class PostController {
         this.postService = postService;
     }
 
-    // Create a new post
+    // Create a password
     @PostMapping
     public ResponseEntity<Post> createPost(@Valid @RequestBody Post post) {
         Post savedPost = postService.createPost(post);
         return new ResponseEntity<>(savedPost, HttpStatus.CREATED);
     }
 
-    // Get a post by ID
+    // Get a password by user ID
     @GetMapping("/{postId}")
     public ResponseEntity<Post> getPostById(@PathVariable Long postId) {
         Post post = postService.getPostById(postId);
@@ -37,7 +37,7 @@ public class PostController {
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
-    // Update an existing post
+    // Update an existing password
     @PutMapping("/{postId}")
     public ResponseEntity<Post> updatePost(@PathVariable Long postId, @Valid @RequestBody Post post) {
         post.setPostId(postId); // Set the ID to match the path variable
@@ -45,28 +45,10 @@ public class PostController {
         return new ResponseEntity<>(updatedPost, HttpStatus.OK);
     }
 
-    // Get all posts (consider pagination for large datasets)
+    // Get all users with a password
     @GetMapping
     public ResponseEntity<List<Post>> getAllPosts() {
         List<Post> posts = postService.getAllPosts();
         return new ResponseEntity<>(posts, HttpStatus.OK);
-    }
-
-    // Search for posts by name (SUBJECT) (potentially replace with more comprehensive search)
-    @GetMapping("/search")
-    public ResponseEntity<List<Post>> searchPostsBySubject(@RequestParam String subject) {
-        Post post = postService.getPostBySubject(subject);
-        if (post == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        List<Post> postList = List.of(post); // Wrap the single post in a list for consistency
-        return new ResponseEntity<>(postList, HttpStatus.OK);
-    }
-
-    // Delete a post (hard deletion)
-    @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
-        postService.deletePost(postId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

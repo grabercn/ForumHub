@@ -12,23 +12,19 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
+public class Comment {
     @Id // Primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
-    private Long postId;
+    @Column(name = "comment_id")
+    private Long commentId;
 
-    @Column(name = "post_subject", nullable = false)
+    @Column(name = "comment_text", nullable = false)
     @NotEmpty
-    private String postSubject;
-
-    @Column(name = "post_text", nullable = false)
-    @NotEmpty
-    private String postText;
+    private String commentText;
 
     @ManyToOne
-    @JoinColumn(name = "forum_id")
-    private Forum forumId;
+    @JoinColumn(name = "post_id")
+    private Post postId;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", insertable = false, updatable = false)

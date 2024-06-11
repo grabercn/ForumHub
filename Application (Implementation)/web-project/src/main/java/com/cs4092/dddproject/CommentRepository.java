@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 // Use JpaRepository<Product, Long> from private Long id; from Product.java
-public interface PostRepository extends JpaRepository<Post, Long> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 }

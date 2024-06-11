@@ -9,64 +9,64 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/comments")
 @CrossOrigin(origins = "*")
-public class PostController {
-    private final PostService postService;
+public class CommentController {
+    private final CommentService commentService;
 
     // Dependency injection
     @Autowired
-    public PostController(PostService postService) {
-        this.postService = postService;
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
     }
 
-    // Create a new post
+    // Create a new comment
     @PostMapping
-    public ResponseEntity<Post> createPost(@Valid @RequestBody Post post) {
-        Post savedPost = postService.createPost(post);
-        return new ResponseEntity<>(savedPost, HttpStatus.CREATED);
+    public ResponseEntity<Comment> createComment(@Valid @RequestBody Comment comment) {
+        Comment savedComment = commentService.createComment(comment);
+        return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
     }
 
-    // Get a post by ID
-    @GetMapping("/{postId}")
-    public ResponseEntity<Post> getPostById(@PathVariable Long postId) {
-        Post post = postService.getPostById(postId);
-        if (post == null) {
+    // Get a comment by ID
+    @GetMapping("/{commentId}")
+    public ResponseEntity<Comment> getCommentById(@PathVariable Long commentId) {
+        Comment comment = commentService.getCommentById(commentId);
+        if (comment == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(post, HttpStatus.OK);
+        return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
-    // Update an existing post
-    @PutMapping("/{postId}")
-    public ResponseEntity<Post> updatePost(@PathVariable Long postId, @Valid @RequestBody Post post) {
-        post.setPostId(postId); // Set the ID to match the path variable
-        Post updatedPost = postService.updatePost(post);
-        return new ResponseEntity<>(updatedPost, HttpStatus.OK);
+    // Update an existing comment
+    @PutMapping("/{commentId}")
+    public ResponseEntity<Comment> updateComment(@PathVariable Long commentId, @Valid @RequestBody Comment comment) {
+        comment.setCommentId(commentId); // Set the ID to match the path variable
+        Comment updatedComment = commentService.updateComment(comment);
+        return new ResponseEntity<>(updatedComment, HttpStatus.OK);
     }
 
-    // Get all posts (consider pagination for large datasets)
+    // Get all comments (consider pagination for large datasets)
     @GetMapping
-    public ResponseEntity<List<Post>> getAllPosts() {
-        List<Post> posts = postService.getAllPosts();
-        return new ResponseEntity<>(posts, HttpStatus.OK);
+    public ResponseEntity<List<Comment>> getAllComments() {
+        List<Comment> comments = commentService.getAllComments();
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
-    // Search for posts by name (SUBJECT) (potentially replace with more comprehensive search)
+    // Search for comments by name (SUBJECT) (potentially replace with more comprehensive search)
     @GetMapping("/search")
-    public ResponseEntity<List<Post>> searchPostsBySubject(@RequestParam String subject) {
-        Post post = postService.getPostBySubject(subject);
-        if (post == null) {
+    public ResponseEntity<List<Comment>> searchCommentsBySubject(@RequestParam String subject) {
+        Comment comment = commentService.getCommentBySubject(subject);
+        if (comment == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        List<Post> postList = List.of(post); // Wrap the single post in a list for consistency
-        return new ResponseEntity<>(postList, HttpStatus.OK);
+        List<Comment> commentList = List.of(comment); // Wrap the single comment in a list for consistency
+        return new ResponseEntity<>(commentList, HttpStatus.OK);
     }
 
-    // Delete a post (hard deletion)
-    @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
-        postService.deletePost(postId);
+    // Delete a comment (hard deletion)
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+        commentService.deleteComment(commentId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
