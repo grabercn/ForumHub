@@ -1,11 +1,10 @@
-// AppCard.js
+// AppCard.jsProduct
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import Zoom from '@mui/material/Zoom';
 
-const AppCard = ({ product, onClick }) => {
+const AppCard = ({ forum, onClick }) => {
   const handleMouseEnter = () => {
     // add future mouse enter logic here
   };
@@ -16,13 +15,13 @@ const AppCard = ({ product, onClick }) => {
 
   return (
     <div className="card-container" onMouseEnter={() => handleMouseEnter()} onMouseLeave={() => handleMouseLeave()}>
-      <Card variant="outlined" onClick={() => onClick(product)}>
+      <Card variant="outlined" onClick={() => onClick(forum)}>
         <CardContent>
           <Typography variant="h5" component="div">
-            {product.productName}
+            {forum.forumName}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {product.description}
+            {forum.description}
           </Typography>
         </CardContent>
       </Card>

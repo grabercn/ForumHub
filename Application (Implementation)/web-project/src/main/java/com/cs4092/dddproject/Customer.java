@@ -19,6 +19,10 @@ public class Customer {
     @Column(name = "customer_id") // Map to the customer_id column
     private Long customerId;
 
+    public Customer(int customerId) {
+        this.customerId = (long) customerId;
+    }
+
     @Column(name = "name", nullable = false) // Map to the name column
     @NotEmpty
     private String name;

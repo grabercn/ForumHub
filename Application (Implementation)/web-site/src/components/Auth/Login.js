@@ -6,7 +6,6 @@ import Button from "@mui/material/Button";
 import Switch from "@mui/material/Switch";
 import Dialog from "@mui/material/Dialog";
 import Signup from "./Signup";
-import { userAccounts } from "../Objects/userAccounts.objects";
 
 const Login = () => {
   const [isAdmin, setIsAdmin] = useState(false);

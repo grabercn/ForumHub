@@ -2,9 +2,9 @@
 
 // This is the forum data object that will be sent to the API endpoint
 const forumObject = {
-    category: 'Shoes',
-    forum_name: 'Shoe Land',
-    forum_description: 'Land of shoes and more shoes',
+    forumCategory: 'Shoes',
+    forumName: 'Shoe Land',
+    forumDescription: 'Land of shoes and more shoes',
 };
 
 async function createForum(forumObject) {
@@ -145,41 +145,13 @@ async function deleteForumById(forumId) {
     }
 }
 
-// TODO: validate with a non-null Stock (requires call to updateInventory() to update quantity on Stock)
-async function getForumAvailability(forumId, quantity) {
-    // Construct the URL with the forumId and quantity variables
-    const url = `http://localhost:8080/api/forums/${forumId}/availability?quantity=${quantity}`;
-    try {
-        const response = await fetch(url, {
-        method: 'GET'
-        });
-
-        if (!response.ok) {
-            throw new Error(`API call failed with status ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log("Availability:", data);
-    }
-    catch(error) {
-        console.error("Error retrieving availability:", error);
-    }
-}
-
-// TODO: make a way to create a Warehouse entity in the database (probably through staffMemberApiCalls.js)
-// TODO: then use this Warehouse entity to update the quantity changed
-// QUESTION: do we blow away Warehouse???
-async function updateInventory(forumId, warehouseId, quantityChange) {
-    
-}
-
 // Export the functions to be used in other files
-//export { createForum, getAllForums, getForumById, getForumByName, updateForumById, deleteForumById};
+export { createForum, getAllForums, getForumById, getForumByName, updateForumById, deleteForumById};
 
 
 // Usage examples
 
-createForum(forumObject);
+//createForum(forumObject);
 //getAllForums();
 //getForumById(1);
 //getForumByName("Forum 1");

@@ -31,7 +31,7 @@ async function createCustomer(customerObject) {
 }
 
 // Export the functions to be used in other files
-// export { createCustomer };
+export { createCustomer };
 
-createCustomer(customerObject);
+//createCustomer(customerObject);
 

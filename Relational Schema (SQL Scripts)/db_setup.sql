@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS Forum (
 -- Create the Posts table
 CREATE TABLE IF NOT EXISTS Post (
     post_id SERIAL PRIMARY KEY,
+    post_subject VARCHAR(100) NOT NULL,
     post_text TEXT NOT NULL,
     customer_id SERIAL,
     forum_id SERIAL,

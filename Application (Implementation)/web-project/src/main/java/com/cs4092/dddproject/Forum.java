@@ -22,9 +22,13 @@ public class Forum {
     @Column(name = "forum_id")
     private Long forumId;
 
-    @Column(nullable = false)
+    public Forum(int forum) {
+        this.forumId = (long) forum;
+    }
+
+    @Column(name="forum_category", nullable = false)
     @NotEmpty
-    private String category;
+    private String forumCategory;
 
     @Column(name = "forum_name", nullable = false)
     @NotEmpty

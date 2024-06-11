@@ -1,29 +1,38 @@
 // ProductDetail.js
-// Handles the specific details of a product and allows the user to add the product to the cart
+// Handles the specific details of a forum and allows the user to add the forum to the cart
 import * as React from 'react';
+import PostList from './PostList';
+import ForumBanner from './ForumBanner';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 
 // Product Detail Component
-// product: The product object to display details for
+// forum: The forum object to display details for
 // showCartButton: A blank (undefined) value to indicate whether or not to display the add to cart button
-const ProductDetail = ({ product}) => {
+const ForumDetail = ({ forum}) => {
 
-  // Return the product details component
-  return (
-    <div>
-      {/* Add any details you want to display in the popup*/}
-      <h1><u>Forum:</u></h1>
-      <h2>{product.name}</h2>
-      <p><u>Description: </u> <br/> {product.description}</p>
-      <p>Price: ${product.price}</p>
-      <p>id:<i>{product.id}</i> Brand: <i>{product.brand}</i>, Size: <i>{product.size}</i>, Category: <i>{product.category}</i></p>
+  // Return the forum details component
+      return (
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            {/* Display the forum name */}
+            <Paper elevation={3}>
+              <ForumBanner heading={forum.forumName} subheading={forum.forumDescription} imgUrl={forum.imageUrl}/>
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            {/* Add any details you want to display in the popup*/}
+            <div>
+              <p>id:<i>{forum.forumId}</i> Category: <i>{forum.forumCategory}</i></p>
+            </div>
+            
+            {/* Display the posts in the forum */}
+            <PostList posts={forum.posts} />
 
-        {/*<img src={product.image} alt={" "} style={{ width: '100px', height: '100px' }} />*/}
-      
-      {/* Added to cart button */}
-      
-      <br/>
-    </div>
-  );
-};
+            <br/>
+          </Grid>
+        </Grid>
+      );
+}
 
-export default ProductDetail;
+export default ForumDetail;

@@ -35,7 +35,7 @@ public class ForumService {
         }
 
         // Update relevant fields (excluding ID)
-        existingForum.setCategory(forum.getCategory());
+        existingForum.setForumCategory(forum.getForumCategory());
         existingForum.setForumName(forum.getForumName());
         existingForum.setForumDescription(forum.getForumDescription());
 

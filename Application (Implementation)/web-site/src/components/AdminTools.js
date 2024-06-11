@@ -3,76 +3,73 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import { Grid} from '@mui/material';
-import ProductDetail from './ForumDetail';
-import ProductList from './ForumList';
+import ForumDetail from './ForumDetail';
+import ForumList from './ForumList';
 import Container from '@mui/material/Container';
 import Dialog from '@mui/material/Dialog';
-import { productsData } from './Objects/productsData.objects';
-import { createProduct, getAllProducts, deleteProductById } from './Helpers/forumApiCalls';
+import { forumsData } from './Objects/forumsData.objects';
+import { createForum, getAllForums, deleteForumById } from './Helpers/forumApiCalls';
 
 const AdminTools = () => {
 
-    var products = productsData;
+    var forums = forumsData;
 
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [showAddProductForm, setShowAddProductForm] = useState(false);
-    const [showRemoveProductForm, setShowRemoveProductForm] = useState(false);
+    const [selectedForum, setSelectedForum] = useState(null);
+    const [showAddForumForm, setShowAddForumForm] = useState(false);
+    const [showRemoveForumForm, setShowRemoveForumForm] = useState(false);
 
-    const handleProductClick = (product) => {
-        setSelectedProduct(product);
+    const handleForumClick = (forum) => {
+        setSelectedForum(forum);
     };
 
-    const handleRemoveProduct = (event) => {
+    const handleRemoveForum = (event) => {
         
         var id = document.getElementById('id').value
 
-        // Delete the product from the API
-        deleteProductById(id);
+        // Delete the forum from the API
+        deleteForumById(id);
         
-        alert('Product removed! Total products: ' + products.length);
+        alert('Forum removed! Total forums: ' + forums.length-1);
         
-        setShowRemoveProductForm(false);
+        setShowRemoveForumForm(false);
 
         event.preventDefault();
         location.reload()
     };
 
-    const handleAddProduct = (event) => {
+    const handleAddForum = (event) => {
         
-        // This is the product data object that will be sent to the API endpoint
-        const productObject = {
-            category: document.getElementById('category').value,
-            productName: document.getElementById('name').value,
-            brand: document.getElementById('brand').value,
-            size: document.getElementById('size').value,
-            description: document.getElementById('description').value,
-            price: document.getElementById('price').value,
+        // This is the forum data object that will be sent to the API endpoint
+        const forumObject = {
+            forumCategory: document.getElementById('category').value,
+            forumName: document.getElementById('name').value,
+            forumDescription: document.getElementById('description').value,
         };
         
-        // Create the product in the API
-        createProduct(productObject);
+        // Create the forum in the API
+        createForum(forumObject);
 
-        alert('Product added! Total products: ' + products.length);
+        alert('Forum added! Total forums: ' + forums.length+1);
         event.preventDefault();
 
-        products = getAllProducts();
-        console.log(products);
+        forums = getAllForums();
+        console.log(forums);
         
-        setShowAddProductForm(false);
+        setShowAddForumForm(false);
         location.reload()
     };
 
-    const handleAddShowProduct = () => {
-        setShowAddProductForm(true);
+    const handleAddShowForum = () => {
+        setShowAddForumForm(true);
     };
 
     const handleCloseForm = () => {
-        setShowAddProductForm(false);
-        setShowRemoveProductForm(false);
+        setShowAddForumForm(false);
+        setShowRemoveForumForm(false);
     };
 
-    const handleShowRemoveProduct = () => {
-        setShowRemoveProductForm(true);
+    const handleShowRemoveForum = () => {
+        setShowRemoveForumForm(true);
     }
 
     return (
@@ -88,72 +85,69 @@ const AdminTools = () => {
             >
                 <h1>Admin Tools</h1>
                 <br />
-                <h2>Product Management</h2>
-                <p>Click on a product to view more details</p>
+                <h2>Forum Management</h2>
+                <p>Click on a forum to view more details</p>
                 <br />
 
                 <Grid container spacing={2}>
                 <Container maxWidth="lg"> {/* Wrap the content in a Container component */}
                     <Grid container spacing={2}>
-                        {products.map((product) => (
-                        <Grid item xs={12} md={4} key={product.id}>
-                            <div className="product-list-wrapper" style={{ overflowWrap: 'break-word' }}>
-                            {/* Include the ProductList component */}
-                            <ProductList showCartButton={false} forums={[product]} onProductClick={handleProductClick} />
+                        {forums.map((forum) => (
+                        <Grid item xs={12} md={4} key={forum.id}>
+                            <div className="forum-list-wrapper" style={{ overflowWrap: 'break-word' }}>
+                            {/* Include the ForumList component */}
+                            <ForumList forums={[forum]} onForumClick={handleForumClick} />
                             </div>
                         </Grid>
                         ))}
                         <Grid item xs={12} md={6}>
-                        {selectedProduct && <ProductDetail product={selectedProduct} />}
+                        {selectedForum && <ForumDetail forum={selectedForum} />}
                         </Grid>
                     </Grid>
                     
                     </Container>
                         
                     <Grid item xs={12}>
-                        {!showAddProductForm && (
-                            <button onClick={handleAddShowProduct}>
+                        {!showAddForumForm && (
+                            <button onClick={handleAddShowForum}>
                                 <AddIcon />
-                                Add Product
+                                Add Forum
                             </button>
                         )}
                     </Grid>
                     <Grid item xs={12}>
-                        {!showRemoveProductForm && (
-                            <button onClick={handleShowRemoveProduct}>
+                        {!showRemoveForumForm && (
+                            <button onClick={handleShowRemoveForum}>
                                 <RemoveIcon />
-                                Remove Product
+                                Remove Forum
                             </button>
                         )}
                     </Grid>
                     
-                    {showAddProductForm && (
+                    {showAddForumForm && (
                         <Dialog open={true} onClose={handleCloseForm}>
                             <container maxWidth="page">
-                            <h2>Add Product</h2>
+                            <h2>Add Forum</h2>
                             <form>
                                 <input type="text" id="category" placeholder="Category" />
                                 <input type="text" id="name" placeholder="Name" />
-                                <input type="text" id="brand" placeholder="Brand" />
-                                <input type="text" id="size" placeholder="Size" />
                                 <input type="text" id="description" placeholder="Description" />
-                                <input type="number" id="price" placeholder="Price" />
                                 <br />
                                 <br />
-                                <button onClick={handleAddProduct}>Add Product</button>
+                                <button onClick={handleAddForum}>Add Forum</button>
                             </form>
                             </container>
                         </Dialog>
                     )}
-                    {showRemoveProductForm && (
+                    {showRemoveForumForm && (
                         <Dialog open={true} onClose={handleCloseForm}>
                             <container maxWidth="page">
-                            <h2>Remove Product</h2>
+                            <h2>Remove Forum</h2>
                             <form>
-                                <input type="number" id="id" placeholder="Product ID" />
+                                <input type="number" id="id" placeholder="Forum ID" />
                                 <br />
                                 <br />
-                                <button onClick={handleRemoveProduct}>Remove Product</button>
+                                <button onClick={handleRemoveForum}>Remove Forum</button>
                             </form>
                             </container>
                         </Dialog>

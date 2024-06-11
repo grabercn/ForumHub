@@ -24,7 +24,7 @@ import { Dialog } from '@mui/material';
 import Searchbar from './Searchbar';
 import AdminTools from './AdminTools';
 import { checkCookie, checkAuth, checkName } from './Helpers/auth';
-import {productsData as forumsData} from './Objects/productsData.objects';
+import {forumsData as forumsData} from './Objects/forumsData.objects';
 import UserProfile from './Auth/UserProfile';
 
 function ResponsiveAppBar() {
