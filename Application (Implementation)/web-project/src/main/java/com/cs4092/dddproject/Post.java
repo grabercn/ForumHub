@@ -18,6 +18,10 @@ public class Post {
     @Column(name = "post_id")
     private Long postId;
 
+    public Post(int postId) {
+        this.postId = (long) postId;
+    }
+
     @Column(name = "post_subject", nullable = false)
     @NotEmpty
     private String postSubject;
@@ -27,11 +31,11 @@ public class Post {
     private String postText;
 
     @ManyToOne
-    @JoinColumn(name = "forum_id")
+    @JoinColumn(name = "forum_id", nullable = false, insertable = true, updatable = true)
     private Forum forumId;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
+    @JoinColumn(name = "customer_id", nullable = false, insertable = true, updatable = true)
     private Customer customerId;
 
 }

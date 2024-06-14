@@ -1,5 +1,4 @@
 import React from 'react';
-import { checkName, checkAuth, checkCookie } from '../Helpers/authApiCalls';
 import { Container } from '@mui/material';
 
 const UserProfile = () => {
@@ -8,10 +7,8 @@ const UserProfile = () => {
     return (
         <div>
             <Container>
-            <h1>Hello {name}</h1>
-            <p>This is the user profile page</p>
-            <p>You are currently logged in as a {checkAuth()}</p>
-            <p>Is the user logged in? {checkCookie() ? 'Yes' : 'No'}</p>
+            <h1>Hello</h1>
+            
             </Container>
         </div>
     );

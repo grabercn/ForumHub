@@ -5,7 +5,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import ForumDetail from './ForumDetail';
 
-const ForumList = ({ forums, onForumClick, showCartButton }) => {
+const ForumList = ({ forums, onForumClick }) => {
   const [open, setOpen] = React.useState(false);
   const [selectedForum, setSelectedForum] = React.useState(null);
 
@@ -30,7 +30,7 @@ const ForumList = ({ forums, onForumClick, showCartButton }) => {
         ))}
       </Stack>
       {selectedForum && (
-        <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+        <Dialog open={open} onClose={handleClose}>
           <DialogContent>
             {/* Display the forum details as a page, pass in selectedForum */}
             <ForumDetail forum={selectedForum} />

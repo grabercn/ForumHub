@@ -25,18 +25,23 @@ public class StaffMember {
     @Column(name = "staff_id")
     private Long staffMemberId;
 
-    @Column(nullable = false)
+    public StaffMember(int staffId) {
+        this.staffMemberId = (long) staffId;
+    }
+
+    @Column(name = "name", nullable = false) // Map to the name column
     @NotEmpty
     private String name;
 
-    @Column(nullable = false)
-    @NotEmpty
-    private String password;
-
-    @Column(nullable = false)
+    @Column(name = "email", nullable = false) // Map to the email column
     @NotEmpty
     private String email;
 
-    @Column(name = "joined_date", nullable = false)
-    private LocalDate joinedDate;
+    @Column(name = "phone_number", nullable = false)
+    @NotEmpty
+    private String phoneNumber;
+
+    @Column(name="password", nullable = false)
+    @NotEmpty
+    private String password;
 }

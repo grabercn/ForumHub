@@ -2,7 +2,7 @@ import { Grid, Input, Switch } from '@mui/material';
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { createCustomer } from '../Helpers/customerApiCalls';
+import { createCustomer } from '../Helpers/userApiCalls';
 
 const Signup = () => {
     const [userName, setUserName] = useState('');
@@ -49,26 +49,39 @@ const Signup = () => {
             >
                 <h1>Sign Up</h1>
                 <form onSubmit={handleCreateUser}>
-                    <label>
-                        Admin?
-                        <Switch 
-                            checked={isAdmin}
-                            onChange={handleToggleChange}
-                        />
-                    </label>
-                    <br />
-                    <br />
-                    <Input 
-                        value={userName} 
-                        onChange={(e) => setUserName(e.target.value)} 
-                        placeholder="Enter username"
-                    />
-                    <br />
-                    <br />
-                    <br />
-                    <Button type="submit" variant="contained">
-                        Create User
-                    </Button>    
+                    <Grid container direction="column" spacing={2}>
+                        <Grid item>
+                            <label>
+                                Admin?
+                                <Switch 
+                                    checked={isAdmin}
+                                    onChange={handleToggleChange}
+                                />
+                            </label>
+                        </Grid>
+                        <Grid item>
+                            <Input 
+                                value={userName} 
+                                onChange={(e) => setUserName(e.target.value)} 
+                                placeholder="Enter username"
+                            />
+                        </Grid>
+                        <Grid item>
+                            <Input type="email" placeholder="Enter email" />
+                        </Grid>
+                        
+                        <Grid item>
+                            <Input type="password" placeholder="Enter password" />
+                        </Grid>
+                        <Grid item>
+                            <Input type="password" placeholder="Confirm password" />
+                        </Grid>
+                        <Grid item>
+                            <Button type="submit" variant="contained">
+                                Create User
+                            </Button>    
+                        </Grid>
+                    </Grid>
                 </form>
             </Box>
         </Grid>

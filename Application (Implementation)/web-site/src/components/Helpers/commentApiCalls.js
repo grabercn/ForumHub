@@ -1,6 +1,6 @@
 // Fetch all comments from the API
 
-const postObject = {
+const commentObject = {
     commentText: 'Comment 1',
     postId: 1,
     customerId: 1
@@ -67,7 +67,7 @@ const removeComment = async (postId) => {
     }
 }
 
-//addComment(postObject);
+//addComment(commentObject);
 //getAllComments();
 //removeComment(1);
 

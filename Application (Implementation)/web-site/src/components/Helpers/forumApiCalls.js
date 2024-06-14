@@ -5,6 +5,7 @@ const forumObject = {
     forumCategory: 'Shoes',
     forumName: 'Shoe Land',
     forumDescription: 'Land of shoes and more shoes',
+    imgUrl: 'https://images.pexels.com/photos/25394823/pexels-photo-25394823/free-photo-of-a-woman-in-a-red-jumpsuit-posing-on-a-porch.jpeg',
 };
 
 async function createForum(forumObject) {

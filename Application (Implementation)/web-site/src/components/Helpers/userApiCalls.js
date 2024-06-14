@@ -3,8 +3,16 @@
 // This is the customer data object that will be sent to the API endpoint
 const customerObject = {
     name: 'Owen',
-    password: 'password',
     email: 'owen@gmail.com',
+    phoneNumber: '123-456-7890',
+    password: 'password',
+};
+
+const staffObject = {
+    name: 'Owen',
+    email: 'owen@gmail.com',
+    phoneNumber: '123-456-7890',
+    password: 'password',
 };
 
 async function createCustomer(customerObject) {
@@ -52,10 +60,60 @@ async function getCustomerById(customerId) {
     }
 }
 
+// create a staff member
+
+async function createStaff(staffObject) {
+    const url = 'http://localhost:8080/api/staff-members';
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(staffObject) // Body expects JSON string
+        });
+
+        if (!response.ok) {
+            throw new Error(`API call failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Staff member created successfully:", data);
+    }
+    catch(error) {
+        console.error("Error creating staff member:", error);
+    }
+}
+
+// find a staff member by id
+async function getStaffById(staffId) {
+    // Construct the URL with the staffId variable
+    const url = `http://localhost:8080/api/staff-members/${Number(staffId)}`;
+    try {
+        const response = await fetch(url, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            throw new Error(`API call failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Staff member:", data);
+        return data;
+    }
+    catch(error) {
+        console.error("Error retrieving staff member:", error);
+    }
+}
+
 
 // Export the functions to be used in other files
-export { createCustomer, getCustomerById };
+export { createCustomer, createStaff, getCustomerById, getStaffById };
 
 //createCustomer(customerObject);
 //getCustomerById(1);
+//getStaffById(2);
+//getCustomerById(1);
 
+//createStaff(staffObject);

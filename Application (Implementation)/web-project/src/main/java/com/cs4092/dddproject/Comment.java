@@ -27,7 +27,7 @@ public class Comment {
     private Post postId;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
+    @JoinColumn(name = "customer_id")
     private Customer customerId;
 
 }

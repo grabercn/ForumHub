@@ -23,8 +23,8 @@ public class StaffMemberService {
     }
 
     // Create a new forum
-    public Forum createForum(Forum forum) {
-        return forumService.createForum(forum);
+    public StaffMember createStaffMember(StaffMember staffMember) {
+        return staffMemberRepository.save(staffMember);
     }
 
     public List<StaffMember> getAllStaffMembers() {
@@ -35,13 +35,28 @@ public class StaffMemberService {
         return staffMemberRepository.save(staffMember);
     }
 
-    public StaffMember getStaffMemberById(Long staffMemberId) {
-        return staffMemberRepository.findById(staffMemberId).orElse(null);
+    // get all staff data by id
+    public StaffMember getFullStaffMemberById(Long id){
+        StaffMember staffMember = staffMemberRepository.findById(id).orElse(null);
+        return staffMember;
+    }
+
+    // Find a staff member by ID
+    public StaffMember getStaffMemberById(Long id) {
+        StaffMember staffMember = staffMemberRepository.findById(id).orElse(null);
+        if (staffMember != null) {
+            StaffMember result = new StaffMember();
+            result.setName(staffMember.getName());
+            result.setEmail(staffMember.getEmail());
+            return result;
+        }
+        return null;
     }
 
     public StaffMember updateStaffMember(StaffMember staffMember) {
         return staffMemberRepository.save(staffMember);
     }
+
 
     /*
     // Update an existing forum

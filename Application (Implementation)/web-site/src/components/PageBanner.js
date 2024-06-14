@@ -11,7 +11,10 @@ const Banner = styled('div')(({ imgUrl }) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: -1, // Change this line to bring the blur effect behind the text
+    transition: 'filter 0.5s ease-in-out', // Add this line to create a smooth transition for the filter property
+    '&:hover': {
+        filter: 'grayscale(0%)', // Add this line to remove the grayscale effect on hover
+    },
 }));
 
 const Text = styled('h1')(({ imgUrl }) => ({

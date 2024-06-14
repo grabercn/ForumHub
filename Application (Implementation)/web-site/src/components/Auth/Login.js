@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Switch from "@mui/material/Switch";
 import Dialog from "@mui/material/Dialog";
 import Signup from "./Signup";
+import { checkAuthLocal, checkCustomerAuthCookie, checkStaffAuthCookie, removeAuthCookieValues, setAuthCookieValues } from "../Objects/userData.object";
 
 const Login = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -22,32 +23,21 @@ const Login = () => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    const username = event.target.elements.username.value;
-  const userType = isAdmin ? "admin" : "user";
+  const password = event.target.elements.password.value;
+  const email = event.target.elements.email.value;
+  const id = 1; // Hardcoded for now
+  const userType = isAdmin ? "staff" : "customer";
 
-  let creditCard = null;
+  setAuthCookieValues(id, email, password);
 
-  if (!isAdmin) {
-    // Retrieve creditCard value only if the field exists (not admin)
-    creditCard = event.target.elements.creditCard?.value;
-  }
-
-  const user = userAccounts.find(
-    (user) =>
-      user.username === username &&
-      user.accountType === userType &&
-      (isAdmin || user.creditCard === creditCard)
-  );
-
-  if (user) {
-    alert("Login successful");
-    document.cookie = "loggedIn=true; path=/";
-    document.cookie = `userType=${userType}; path=/`;
-    document.cookie = `userName=${username}; path=/`;
-    window.location.reload();
-  } else {
-    alert("Invalid username or credit card number");
-  }
+  checkAuthLocal(userType).then((response) => {
+    if (response === true) {
+      alert("Logged in!");
+      window.location.reload();
+    } else {
+      alert("Invalid credentials!");
+    }
+  });
 };
 
   return (
@@ -74,20 +64,20 @@ const Login = () => {
           </Grid>
           <Grid item>
             <TextField
-              id="username"
-              label="Username"
+              id="email"
+              label="Email"
               variant="outlined"
-              name="username"
+              name="email"
             />
           </Grid>
-          {!isAdmin && (
+          { (
             <Grid item>
               <TextField
-                id="creditCard"
+                id="password"
                 type="password"
-                label="Credit Card Number"
+                label="Password"
                 variant="outlined"
-                name="creditCard"
+                name="password"
               />
             </Grid>
           )}

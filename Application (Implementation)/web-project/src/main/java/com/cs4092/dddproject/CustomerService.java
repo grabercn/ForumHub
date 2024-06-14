@@ -10,7 +10,8 @@ public class CustomerService {
     // Dependency injection
     @Autowired
     public CustomerService(
-                           CustomerRepository customerRepository) {
+                           CustomerRepository customerRepository
+    ) {
         this.customerRepository = customerRepository;
     }
 
@@ -19,8 +20,19 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
+    public Customer getFullCustomerById(Long id){
+        Customer customer = customerRepository.findById(id).orElse(null);
+        return customer;
+    }
+
     // Find a customer by ID
     public Customer getCustomerById(Long id) {
-        return customerRepository.findById(id).orElse(null);
+        Customer customer = customerRepository.findById(id).orElse(null);
+        if (customer != null) {
+            Customer result = new Customer();
+            result.setName(customer.getName());
+            return result;
+        }
+        return null;
     }
 }

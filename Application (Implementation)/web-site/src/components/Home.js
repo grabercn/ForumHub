@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import { Grid } from '@mui/material';
 import { forumsData as forumsData } from "./Objects/forumsData.objects";
 import PageBanner from "./PageBanner";
+import { checkAuthLocal } from "./Objects/userData.object";
 
 const theme = createTheme({
   typography: {
@@ -17,6 +18,9 @@ const theme = createTheme({
 const Home = () => {
   const [selectedForum, setSelectedForum] = useState(null);
   const [forums, setForums] = useState(forumsData); // Initialize forums with forumsData
+  const [isAuthChecked, setIsAuthChecked] = useState(false); // render certain components based on if auth was checked yet or not
+  const [settings, setSettings] = useState([]); // for rendering of settings in navbar
+  const [pages, setPages] = useState([]); // for rendering of pages in navbar
 
   function handleForumClick(forum) {
     setSelectedForum(forum);
@@ -27,10 +31,37 @@ const Home = () => {
     setForums(forumsData); // Update forums with the latest data from forumsData
   }, [forumsData]);
 
+  /* Include the Navbar component, renders based on user authentication */
+  let appBarComponent = null;
+        
+  useEffect(() => {
+    checkAuthLocal().then((response) => {
+      if (response === true){
+        setSettings(['About', 'Logout'])
+        checkAuthLocal("staff").then((response) => {
+          if (response){
+            setPages(['Admin Tools'])
+          }else{
+            setPages([])
+          }
+        });
+
+        setIsAuthChecked(true);
+      }else{
+        setSettings(['About', 'Login'])
+        setIsAuthChecked(true);
+      }
+    });
+  }, []);
+
+
+
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <ResponsiveAppBar /> {/* Include the Navbar component */}
+        {/* Include the Navbar component */}
+        {isAuthChecked && <ResponsiveAppBar settings={settings} pages={pages}  />}
+        <br />
         
         <PageBanner text="Welcome to ForumHub" subtext="Click on a forum to view it." imgUrl="https://images.pexels.com/photos/6176069/pexels-photo-6176069.jpeg" />
         <br />

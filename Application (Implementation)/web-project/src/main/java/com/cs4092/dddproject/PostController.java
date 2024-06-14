@@ -20,14 +20,14 @@ public class PostController {
         this.postService = postService;
     }
 
-    // Create a password
+    // Create a post
     @PostMapping
     public ResponseEntity<Post> createPost(@Valid @RequestBody Post post) {
         Post savedPost = postService.createPost(post);
         return new ResponseEntity<>(savedPost, HttpStatus.CREATED);
     }
 
-    // Get a password by user ID
+    // Get a post by post ID
     @GetMapping("/{postId}")
     public ResponseEntity<Post> getPostById(@PathVariable Long postId) {
         Post post = postService.getPostById(postId);
@@ -37,7 +37,7 @@ public class PostController {
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
-    // Update an existing password
+    // Update an existing post
     @PutMapping("/{postId}")
     public ResponseEntity<Post> updatePost(@PathVariable Long postId, @Valid @RequestBody Post post) {
         post.setPostId(postId); // Set the ID to match the path variable
@@ -45,10 +45,17 @@ public class PostController {
         return new ResponseEntity<>(updatedPost, HttpStatus.OK);
     }
 
-    // Get all users with a password
+    // Get all posts
     @GetMapping
     public ResponseEntity<List<Post>> getAllPosts() {
         List<Post> posts = postService.getAllPosts();
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    // Get all posts by forum ID
+    @GetMapping("/forum/{forumId}")
+    public ResponseEntity<List<Post>> getPostsByForumId(@PathVariable Long forumId) {
+        List<Post> posts = postService.getPostsByForumId(forumId);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }

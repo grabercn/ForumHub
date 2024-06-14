@@ -5,6 +5,7 @@
 // See bottom of file for the conditional rendering of each component.
 
 import * as React from 'react';
+import { useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -23,17 +24,18 @@ import Logout from './Auth/Logout';
 import { Dialog } from '@mui/material';
 import Searchbar from './Searchbar';
 import AdminTools from './AdminTools';
-import { checkCookie, checkAuth, checkName } from './Helpers/authApiCalls';
 import {forumsData as forumsData} from './Objects/forumsData.objects';
 import UserProfile from './Auth/UserProfile';
+import { checkAuthLocal, checkStaffAuthCookie, checkCustomerAuthCookie, setAuthCookieValues } from './Objects/userData.object'
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar(props) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [showLogin, setShowLogin] = React.useState(false);
   const [showAuth, setShowAuth] = React.useState(false);
   const [showAbout, setShowAbout] = React.useState(false);
   const [showUserProfile, setShowUserProfile] = React.useState(false);
+  const [isLoggedin, setIsLoggedin] = React.useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -57,24 +59,11 @@ function ResponsiveAppBar() {
   };
 
   var forums = forumsData;
-  var userName = checkName();
+  var userName = "User";
 
-  // List of settings
-  const settings = [];
-  const pages = ['About'];
-
-  // Menu items based on logged in status
-  if (checkCookie() == true) {
-    settings.push('User Profile');
-    settings.push('Logout');
-  } else { 
-    settings.push('Login');
-  }
-
-  // Check if user is admin
-  if (checkAuth() == 'Admin') {
-    pages.push('Admin Tools');
-  }
+  // Add the pages and settings to the navbar, force them to be arrays
+  var pages = props.pages || [];
+  var settings = props.settings || [];
 
   const handleNavClick = (button) => {
     setAnchorElUser(null); // close menu after clicking
@@ -92,6 +81,17 @@ function ResponsiveAppBar() {
       setShowUserProfile(true);
     }
   };
+
+  // Check if the user is logged in, and set the state accordingly
+  useEffect(() => {
+    checkAuthLocal().then((response) => {
+      if (response === true){
+        setIsLoggedin(true);
+      }else{
+        setIsLoggedin(false);
+      }
+    });
+  }, []);
 
   const handleSettingsClick = (button) => {
     setAnchorElUser(null); // close menu after clicking
@@ -245,7 +245,7 @@ function ResponsiveAppBar() {
       {showLogin && (
         <>
           <Dialog open={showLogin} onClose={() => setShowLogin(false)}>
-            {checkCookie() ? <Logout /> : <Login />}
+            {isLoggedin ? <Logout /> : <Login />}
           </Dialog>
         </>
       )}
@@ -279,5 +279,4 @@ function ResponsiveAppBar() {
   );
 }
 export default ResponsiveAppBar;
-export { checkCookie, checkAuth };
 

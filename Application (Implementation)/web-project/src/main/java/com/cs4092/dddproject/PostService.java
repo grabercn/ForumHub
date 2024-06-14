@@ -61,6 +61,17 @@ public class PostService {
         return postsWithSubject.isEmpty() ? null : postsWithSubject.get(0);
     }
 
+    // Get all posts by forum ID
+    public List<Post> getPostsByForumId(Long forumId) {
+        List<Post> allPosts = postRepository.findAll();
+
+        // Filter posts by forum ID
+        List<Post> postsWithForumId = allPosts.stream()
+                .filter(post -> post.getForumId().getForumId().equals(forumId))
+                .collect(Collectors.toList());
+
+        return postsWithForumId;
+    }
     // Delete a post (hard deletion)
     public void deletePost(Long postId) {
         Post post = postRepository.findById(postId).orElse(null);

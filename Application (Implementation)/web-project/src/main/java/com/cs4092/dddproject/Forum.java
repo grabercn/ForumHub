@@ -37,4 +37,7 @@ public class Forum {
     @Column(name = "forum_description", nullable = false)
     @NotEmpty
     private String forumDescription;
+
+    @Column(name="img_url", nullable = true)
+    private String imgUrl;
 }

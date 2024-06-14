@@ -1,13 +1,13 @@
 // Login.js
 // Login Page for both users and staff members
 import React from 'react';
+import { removeAuthCookieValues } from '../Objects/userData.object';
 
-const Logout = () => {
-    console.log('Logout successful')
-
-    // Code to delete the login cookie
-    document.cookie = "loggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
+function Logout () {
+    
+    // Clear the auth cookies
+    removeAuthCookieValues();
+    
     return (
         <div>
             {/* Logout content */}
@@ -16,6 +16,7 @@ const Logout = () => {
                 <h2>You have been successfully logged out</h2>
                 <br/>
             </div>
+            {window.location.reload()}
         </div>
     );
 }

@@ -3,7 +3,7 @@
 const postObject = {
     postSubject: 'Post 1',
     postText: 'Text of post 1',
-    costumerId: 1,
+    customerId: 1,
     forumId: 1
 };
 
@@ -32,6 +32,27 @@ const addPost = async (postObject) => {
 
 const getAllPosts = async () => {
     const url = 'http://localhost:8080/api/posts';
+    try {
+        const response = await fetch(url, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            throw new Error(`API call failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Posts:", data);
+        return data;
+    }
+    catch(error) {
+        console.error("Error retrieving posts:", error);
+    }
+}
+
+// get all posts for a forum
+const getPostsByForumId = async (forumId) => {
+    const url = `http://localhost:8080/api/posts/forum/${forumId}`;
     try {
         const response = await fetch(url, {
             method: 'GET'
@@ -91,6 +112,7 @@ const getPostById = async (postId) => {
 
 //addPost(postObject);
 //getAllPosts();
+//getPostsByForumId(1);
 //removePost(1);
 
-export { addPost, getAllPosts, removePost, getPostById };
+export { addPost, getAllPosts, removePost, getPostById, getPostsByForumId };

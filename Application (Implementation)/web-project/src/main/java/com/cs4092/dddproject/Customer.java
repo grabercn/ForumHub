@@ -1,19 +1,23 @@
 package com.cs4092.dddproject;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 
+/* This class represents a forum in the application. */
 @Entity
-@Table(name = "Customer") // Specify the table name
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Customer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id") // Map to the customer_id column
@@ -27,10 +31,16 @@ public class Customer {
     @NotEmpty
     private String name;
 
-    @Column(name = "password", nullable = false) // Map to the password column
+    @Column(name = "email", nullable = false) // Map to the email column
+    @NotEmpty
+    private String email;
+
+    @Column(name = "phone_number", nullable = false)
+    @NotEmpty
+    private String phoneNumber;
+
+    @Column(name = "password", nullable = false)
+    @NotEmpty
     private String password;
 
-    @Column(name = "email", nullable = false) // Map to the email column
-    private String email;
-    
 }

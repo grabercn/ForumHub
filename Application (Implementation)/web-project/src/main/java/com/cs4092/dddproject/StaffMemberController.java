@@ -6,7 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/staff-members")
@@ -27,14 +30,7 @@ public class StaffMemberController {
         return new ResponseEntity<>(savedStaffMember, HttpStatus.CREATED);
     }
 
-    // Get all staff members (consider pagination for large datasets)
-    @GetMapping
-    public ResponseEntity<List<StaffMember>> getAllStaffMembers() {
-        List<StaffMember> staffMembers = staffMemberService.getAllStaffMembers(); // Assuming getAllStaffMembers exists in StaffMemberService
-        return new ResponseEntity<>(staffMembers, HttpStatus.OK);
-    }
-
-    // Get a staff member by ID
+    // Get a staff member by ID (only returns id and name for security)
     @GetMapping("/{staffMemberId}")
     public ResponseEntity<StaffMember> getStaffMemberById(@PathVariable Long staffMemberId) {
         StaffMember staffMember = staffMemberService.getStaffMemberById(staffMemberId); // Assuming getStaffMemberById exists in StaffMemberService
@@ -42,7 +38,19 @@ public class StaffMemberController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(staffMember, HttpStatus.OK);
-   }
+    }
+    
+    // get a true or false if staff member credentials are correct
+    @GetMapping("/auth/{staffMemberId},{staffMemberEmail},{staffMemberPassword}")
+    public ResponseEntity<Boolean> getAuthStaffMemberById(@PathVariable Long staffMemberId, @PathVariable String staffMemberEmail, @PathVariable String staffMemberPassword) {
+        StaffMember staffMember = staffMemberService.getFullStaffMemberById(staffMemberId);
+        if (staffMember == null || !staffMember.getEmail().equals(staffMemberEmail) || !staffMember.getPassword().equals(staffMemberPassword)) {
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+
 
     // Update a staff member (implement validation, error handling, and partial updates)
     @PutMapping("/{staffMemberId}")
@@ -52,3 +60,5 @@ public class StaffMemberController {
         return new ResponseEntity<>(updatedStaffMember, HttpStatus.OK);
     }
 }
+
+
