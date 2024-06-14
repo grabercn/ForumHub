@@ -18,7 +18,6 @@ const checkStaffAuth = async (id, email, password) => {
     }
 
     const data = await response.json();
-    console.log("Authenticated(S):", data);
     return data;
   } catch (error) {
     console.error("Error authenticating:", error);
@@ -36,7 +35,6 @@ const checkCustomerAuth = async (id, email, password) => {
     }
 
     const data = response.data;
-    console.log("Authenticated(C):", data);
     return data;
   } catch (error) {
     console.error("Error authenticating:", error);

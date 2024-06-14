@@ -2,7 +2,7 @@ import { Grid, Input, Switch } from '@mui/material';
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { createCustomer } from '../Helpers/userApiCalls';
+import { createCustomer, createStaff } from '../Helpers/userApiCalls';
 
 const Signup = () => {
     const [userName, setUserName] = useState('');
@@ -17,12 +17,40 @@ const Signup = () => {
 
         const userType = isAdmin ? 'admin' : 'customer';
 
+        const name = event.target[1].value;
+        const email = event.target[2].value;
+        const password = event.target[3].value;
+        const password2 = event.target[4].value;
+        const phoneNumber = event.target[5].value;
+
+        if (password !== password2) {
+            alert('Passwords do not match.');
+            return;
+        }
+
         if (userType === 'admin') {
-            // Create admin user here
-            alert(`Created admin user with username: ${userName}.`);
+            // Create staff user here
+            
+            const staffObject = {
+                name: name,
+                email: email,
+                phoneNumber: phoneNumber,
+                password: password,
+            };
+
+            try {
+                createStaff(staffObject);
+                alert(`Created staff user with username: ${userName}.`);
+                window.location.reload();
+            } catch (error) {
+                alert(`Error creating staff user.`);
+            }
         } else {
             const customerObject = {
                 name: userName,
+                email: email,
+                phoneNumber: phoneNumber,
+                password: password,
             };
             
             try {
@@ -30,7 +58,7 @@ const Signup = () => {
                 alert(`Created customer with username: ${userName}.`);
                 window.location.reload();
             } catch (error) {
-                alert(`Error creating customer: ${error}`);
+                alert(`Error creating customer.`);
             }
         }
     }
@@ -63,18 +91,20 @@ const Signup = () => {
                             <Input 
                                 value={userName} 
                                 onChange={(e) => setUserName(e.target.value)} 
-                                placeholder="Enter username"
+                                placeholder="Enter name"
                             />
                         </Grid>
                         <Grid item>
                             <Input type="email" placeholder="Enter email" />
                         </Grid>
-                        
                         <Grid item>
                             <Input type="password" placeholder="Enter password" />
                         </Grid>
                         <Grid item>
                             <Input type="password" placeholder="Confirm password" />
+                        </Grid>
+                        <Grid item>
+                            <Input type="phoneNumber" placeholder="Enter phone number" />
                         </Grid>
                         <Grid item>
                             <Button type="submit" variant="contained">

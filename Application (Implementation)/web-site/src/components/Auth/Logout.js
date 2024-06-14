@@ -1,7 +1,7 @@
 // Login.js
 // Login Page for both users and staff members
 import React from 'react';
-import { removeAuthCookieValues } from '../Objects/userData.object';
+import { checkAuthLocal, removeAuthCookieValues } from '../Objects/userData.object';
 
 function Logout () {
     

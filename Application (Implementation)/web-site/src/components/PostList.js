@@ -92,7 +92,7 @@ function PostList(props) {
         <div>
             <h3>Posts:</h3>
             <ul>
-            {posts && (
+            {posts &&  Object.values(posts) !== 0 && (
                 posts.map((post) => (
                 <li key={post.postId}>
                     <div style={{ border: '1px solid black', padding: '10px', marginBottom: '10px' }}>
