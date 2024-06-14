@@ -28,8 +28,7 @@ const Login = () => {
   const id = 1; // Hardcoded for now
   const userType = isAdmin ? "staff" : "customer";
 
-  setAuthCookieValues(id, email, password);
-
+  
   checkAuthLocal(userType).then((response) => {
     if (response === true) {
       alert("Logged in!");

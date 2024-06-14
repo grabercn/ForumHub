@@ -35,10 +35,15 @@ public class StaffMemberService {
         return staffMemberRepository.save(staffMember);
     }
 
-    // get all staff data by id
+    // get full staff data by id
     public StaffMember getFullStaffMemberById(Long id){
         StaffMember staffMember = staffMemberRepository.findById(id).orElse(null);
         return staffMember;
+    }
+
+    // Get full staff member by email and password
+    public StaffMember getFullStaffMemberByEmailAndPassword(String email, String password) {
+        
     }
 
     // Find a staff member by ID

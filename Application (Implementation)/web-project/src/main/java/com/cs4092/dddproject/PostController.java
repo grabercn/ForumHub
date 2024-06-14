@@ -58,4 +58,15 @@ public class PostController {
         List<Post> posts = postService.getPostsByForumId(forumId);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
+
+    // Delete all posts by forum ID
+    @DeleteMapping("/forum/{forumId}")
+    public ResponseEntity<Boolean> deletePostsByForumId(@PathVariable Long forumId) {
+        boolean result = postService.deletePostsByForumId(forumId);
+        if (result) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

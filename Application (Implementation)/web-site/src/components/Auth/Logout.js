@@ -7,18 +7,18 @@ function Logout () {
     
     // Clear the auth cookies
     removeAuthCookieValues();
-    
-    return (
-        <div>
-            {/* Logout content */}
-            <div className="logout-box">
-                <br/>
-                <h2>You have been successfully logged out</h2>
-                <br/>
-            </div>
-            {window.location.reload()}
-        </div>
+    return(
+    <div>
+
+        <h1>Logging out...</h1>
+        
+        {// Reload the page after 5 seconds
+        setTimeout(() => {
+            window.location.reload();
+        }, 5000)}
+    </div>
     );
+    
 }
 
 export default Logout;

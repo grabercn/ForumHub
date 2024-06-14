@@ -30,26 +30,6 @@ const addPost = async (postObject) => {
     }
 }
 
-const getAllPosts = async () => {
-    const url = 'http://localhost:8080/api/posts';
-    try {
-        const response = await fetch(url, {
-            method: 'GET'
-        });
-
-        if (!response.ok) {
-            throw new Error(`API call failed with status ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log("Posts:", data);
-        return data;
-    }
-    catch(error) {
-        console.error("Error retrieving posts:", error);
-    }
-}
-
 // get all posts for a forum
 const getPostsByForumId = async (forumId) => {
     const url = `http://localhost:8080/api/posts/forum/${forumId}`;
@@ -89,6 +69,25 @@ const removePost = async (postId, forumId) => {
     }
 }
 
+// delete posts by forum id
+const removeAllPostsByForumId = async (forumId) => {
+    const url = `http://localhost:8080/api/posts/forum/${forumId}`;
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            throw new Error(`API call failed with status ${response.status}`);
+        }
+
+        console.log("Posts deleted successfully");
+    }
+    catch(error) {
+        console.error("Error deleting posts:", error);
+    }
+}
+
 // get post by id
 const getPostById = async (postId) => {
     const url = `http://localhost:8080/api/posts/${postId}`;
@@ -115,4 +114,4 @@ const getPostById = async (postId) => {
 //getPostsByForumId(1);
 //removePost(1);
 
-export { addPost, getAllPosts, removePost, getPostById, getPostsByForumId };
+export {removeAllPostsByForumId, addPost, removePost, getPostById, getPostsByForumId };

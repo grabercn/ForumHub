@@ -71,4 +71,16 @@ public class CommentService {
         commentRepository.deleteById(commentId);
     }
 
+    // Get all comments by post ID
+    public List<Comment> getCommentsByPostId(Long postId) {
+        List<Comment> allComments = commentRepository.findAll();
+
+        // Filter comments by post ID
+        List<Comment> commentsWithPostId = allComments.stream()
+                .filter(comment -> comment.getPostId().getPostId().equals(postId))
+                .collect(Collectors.toList());
+
+        return commentsWithPostId;
+    }
+
 }

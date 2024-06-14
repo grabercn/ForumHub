@@ -26,7 +26,7 @@ import Searchbar from './Searchbar';
 import AdminTools from './AdminTools';
 import {forumsData as forumsData} from './Objects/forumsData.objects';
 import UserProfile from './Auth/UserProfile';
-import { checkAuthLocal, checkStaffAuthCookie, checkCustomerAuthCookie, setAuthCookieValues } from './Objects/userData.object'
+import { checkAuthLocal } from './Objects/userData.object'
 
 function ResponsiveAppBar(props) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -252,7 +252,7 @@ function ResponsiveAppBar(props) {
       {/* Show the admin tools */}
       {showAuth && (
         <>
-          <Dialog open={showAuth} onClose={handleCloseAdminTools}>
+          <Dialog open={showAuth} onClose={handleCloseAdminTools} fullWidth={true} >
             <AdminTools />
           </Dialog>
         </>

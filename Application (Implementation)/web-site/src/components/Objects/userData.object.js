@@ -1,5 +1,6 @@
-import { checkCustomerAuth } from '../Helpers/authApiCalls.js';
+import { checkCustomerAuth, getCustomerId } from '../Helpers/authApiCalls.js';
 import { checkStaffAuth } from '../Helpers/authApiCalls.js';
+import { getStaffById } from '../Helpers/userApiCalls.js';
 
 // Function to set a cookie
 function setCookie(name, value, days) {
@@ -64,10 +65,13 @@ function getAuthCookieValues() {
  * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the customer is authenticated or not.
  */
 async function checkCustomerAuthCookie() {
-    const { userId, userEmail, userPassword } = getAuthCookieValues();
-    return checkCustomerAuth(userId, userEmail, userPassword)
+    const { userEmail, userPassword } = getAuthCookieValues();
+    return checkCustomerAuth(userEmail, userPassword)
         .then((customerAuth) => {
             if (customerAuth === true) {
+                getCustomerId(userEmail, userPassword).then((id) => {
+                    setAuthCookieValues(id, userEmail, userPassword);
+                });
                 return true;
             } else {
                 //removeAuthCookieValues();
@@ -77,10 +81,13 @@ async function checkCustomerAuthCookie() {
 }
 
 async function checkStaffAuthCookie() {
-    const { userId, userEmail, userPassword } = getAuthCookieValues();
-    return checkStaffAuth(Number(userId), userEmail, userPassword)
+    const { userEmail, userPassword } = getAuthCookieValues();
+    return checkStaffAuth(userEmail, userPassword)
         .then((staffAuth) => {
             if (staffAuth === true) {
+                getStaffById(userEmail, userPassword).then((id) => {
+                    setAuthCookieValues(id, userEmail, userPassword);
+                });
                 return true;
             } else {
                 //removeAuthCookieValues();

@@ -83,4 +83,16 @@ public class PostService {
         postRepository.deleteById(postId);
     }
 
+    // Delete all posts by forum ID
+    public boolean deletePostsByForumId(Long forumId) {
+        List<Post> posts = getPostsByForumId(forumId);
+
+        // Perform hard deletion using the repository
+        postRepository.deleteAll(posts);
+
+        // Check if all posts have been deleted
+        return postRepository.findAll().stream()
+                .noneMatch(post -> post.getForumId().getForumId().equals(forumId));
+    }
+
 }

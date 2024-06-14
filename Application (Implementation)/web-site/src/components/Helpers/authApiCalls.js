@@ -3,7 +3,7 @@ import axios from 'axios';
 // File: auth.js
 // This file contains helper functions for authentication
 
-const checkStaffAuth = async (id, email, password) => {
+const checkStaffAuth = async (email, password) => {
   const url = `http://localhost:8080/api/staff-members/auth/${Number(id)},${email},${password}`;
   try {
     const response = await fetch(url, {
@@ -25,7 +25,7 @@ const checkStaffAuth = async (id, email, password) => {
   }
 };
 
-const checkCustomerAuth = async (id, email, password) => {
+const checkCustomerAuth = async (email, password) => {
   const url = `http://localhost:8080/api/customers/auth/${Number(id)},${email},${password}`;
   try {
     const response = await axios.get(url);
@@ -71,4 +71,4 @@ async function getCustomerId(email, password) {
 //  console.log(result);
 //})
 
-export { checkStaffAuth, checkCustomerAuth};
+export { checkStaffAuth, checkCustomerAuth, getCustomerId};

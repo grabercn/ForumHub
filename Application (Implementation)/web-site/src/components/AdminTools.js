@@ -24,13 +24,17 @@ const AdminTools = () => {
     };
 
     const handleRemoveForum = (event) => {
+
+        alert('hey');
         
         var id = document.getElementById('id').value
 
         // Delete the forum from the API
         try{
             deleteForumById(id);
-            alert('Forum removed! Total forums: ' + forums.length-1);
+            deletePostsByForumId(id);
+            deleteCommentsByForumId(id);
+            alert('Forum removed! Total forums: ' + Object.keys(forums).length-1);
         }catch(e){
             alert('Forum not found!');
         }
@@ -54,7 +58,7 @@ const AdminTools = () => {
         // Create the forum in the API
         createForum(forumObject);
 
-        alert('Forum added! Total forums: ' + forums.length+1);
+        alert('Forum added! Total forums: ' + Object.keys(forums).length+1);
         event.preventDefault();
 
         forums = getAllForums();
@@ -96,6 +100,24 @@ const AdminTools = () => {
 
                 <Grid container spacing={2}>
                 {/* Wrap the content in a Container component */}
+                <Grid item xs={12}>
+                        {!showAddForumForm && (
+                            <Button onClick={handleAddShowForum}>
+                                <AddIcon />
+                                Add Forum
+                            </Button>
+                        )}
+                    </Grid>
+                    <Grid item xs={12}>
+                        {!showRemoveForumForm && (
+                            <Button onClick={handleShowRemoveForum}>
+                                <RemoveIcon />
+                                Remove Forum
+                            </Button>
+                        )}
+                    <Grid item xs={12}/>
+                    </Grid>
+                    
                 <Grid container spacing={2}>
                     {forums.map((forum) => (
                         <Grid item xs={12} md={4} key={forum.id} style={{marginLeft: '10px'}}>
@@ -111,23 +133,6 @@ const AdminTools = () => {
                 </Grid>
 
                 <Container maxWidth="lg" style={{ marginTop: '20px' }}>
-                    <Grid item xs={12}>
-                        {!showAddForumForm && (
-                            <Button onClick={handleAddShowForum}>
-                                <AddIcon />
-                                Add Forum
-                            </Button>
-                        )}
-                    </Grid>
-                    <Grid item xs={12}>
-                        {!showRemoveForumForm && (
-                            <Button onClick={handleShowRemoveForum}>
-                                <RemoveIcon />
-                                Remove Forum
-                            </Button>
-                        )}
-                    </Grid>
-
                     {showAddForumForm && (
                         <Dialog open={true} onClose={handleCloseForm}>
                             <Container maxWidth="page" style={{ padding: '20px', marginTop: '20px' }}>
@@ -160,7 +165,7 @@ const AdminTools = () => {
                                         </Select>
                                     </Grid> 
                                     <Grid item xs={12}>
-                                    <Input type="text" id="imgUrl" placeholder="Image URL (MenuItemal)" />
+                                    <Input type="text" id="imgUrl" placeholder="Image URL (Optional)" />
                                     </Grid>
                                     <br />
                                     <br />
@@ -174,12 +179,14 @@ const AdminTools = () => {
                     )}
                     {showRemoveForumForm && (
                         <Dialog open={true} onClose={handleCloseForm}>
-                            <Container maxWidth="page" style={{ padding: '20px', marginTop: '20px' }}>
+                            <Container maxWidth="page" style={{ padding: '20px', marginTop: '20px'}}>
                                 <h2>Remove Forum</h2>
+                                <Grid container spacing={1}>
                                 <ForumList forums={forums} onForumClick={handleForumClick}/>
+                                </Grid>
                                 <form onSubmit={handleRemoveForum}>
                                     <br />
-                                    <Grid container spacing={1}>
+                                    <Grid container spacing={1} >
                                         <Grid item xs={12}>
                                             <Input type="text" id="id" placeholder="ID" />
                                         </Grid>

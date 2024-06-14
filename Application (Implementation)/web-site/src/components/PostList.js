@@ -1,12 +1,11 @@
 import React from 'react';
-import { postsData } from './Objects/postsData.object';
 import { addPost } from './Helpers/postApiCalls';
 import { useEffect } from 'react';
 import { getCustomerById } from './Helpers/userApiCalls';
-import { Input, Button, TextField } from '@mui/material';
-import { commentsData } from './Objects/commentsData.object';
-import { addComment } from './Helpers/commentApiCalls';
+import { Input, Button, TextField, Grid } from '@mui/material';
+import { addComment, getAllCommentsByPostId } from './Helpers/commentApiCalls';
 import { getPostsByForumId  } from './Helpers/postApiCalls';
+import { checkAuthLocal } from './Objects/userData.object';
 
 function PostList(props) {
 
@@ -17,7 +16,8 @@ function PostList(props) {
     const [content, setContent] = React.useState('');
     const [posts, setPosts] = React.useState();
     const [isFormOpen, setIsFormOpen] = React.useState(false);
-    const [comments, setComments] = React.useState(commentsData);
+    const [isLoggedin, setIsLoggedin] = React.useState(false);
+    const [comments, setComments] = React.useState();
     const [comment, setComment] = React.useState('');
     const [isCommentFormOpen, setIsCommentFormOpen] = React.useState(null);
     const [CustomerName, setCustomerName] = React.useState('');
@@ -52,10 +52,14 @@ function PostList(props) {
         };
 
         addComment(newComment);
-        comments.push(newComment);
-
-        setComments([...comments, newComment]);
+        try{
+            comments.push(newComment);
+        }catch(e){
+            setComments([newComment]);
+        }
+        
         setComment('');
+        setComments(comments);
     };
 
     const handleSubmit = (event) => {
@@ -68,50 +72,81 @@ function PostList(props) {
             customerId: customerId, // pass this in eventually, blank for now
         };
 
+        // Call the addPost function from postApiCalls.js
         addPost(newPost);
-        postsData.push(newPost);
 
+        //set the posts state to include the new post
         setPosts([...posts, newPost]);
         setTitle('');
         setContent('');
     };
 
-    // Get posts and customer name
+    //check auth status on load
+    useEffect(() => {
+        checkAuthLocal().then((response) => {
+            if (response === true){
+                setIsLoggedin(true);
+            }else{
+                setIsLoggedin(false);
+            }
+        });
+    }, []);
+
+    // Get posts, comments, and customer name on load
     useEffect(() => {
         getCustomerById(customerId).then((data) => {
             setCustomerName(data.name);
         });
-        getPostsByForumId(forumId).then((data) => {
-            setPosts(data);
+        getPostsByForumId(forumId).then((data) => { // Get posts by forumId
+            
+            setPosts(data); // Set posts state
+           
+            data.forEach((post) => { // For each post
+                
+                // Get comments for each post
+                getAllCommentsByPostId(post.postId).then((comments) => { // Get comments by postId
+                    setComments((prevComments) => { // Set comments state
+                        return { // Return the previous comments and add the new comments
+                            ...prevComments,
+                            [post.postId]: comments,
+                        };
+                    }); 
+                });
+            });
         });
-    }, [forumId]);
-
-    console.log(posts);
-
+    }, [comment, forumId, customerId]);
+    
     return (
         <div>
+            {isLoggedin && <h2>Welcome, {CustomerName || 'Unknown'}</h2>}
             <h3>Posts:</h3>
             <ul>
-            {posts &&  Object.values(posts) !== 0 && (
+            {posts && (
                 posts.map((post) => (
                 <li key={post.postId}>
                     <div style={{ border: '1px solid black', padding: '10px', marginBottom: '10px' }}>
                     {/* Remove unnecessary useEffect (security issue) */}
-                    <p style={{ fontSize: '12px', fontStyle: 'italic' }}>{CustomerName || 'Unknown'}</p>
+                    <p style={{ fontSize: '12px', fontStyle: 'italic' }}>{post.customerId.name || 'Unknown'}</p>
                     <h4 style={{ fontWeight: 'bold' }}>{post.postSubject}</h4>
                     <hr />
                     <p style={{ fontSize: '14px' }}>{post.postText}</p>
 
                     <h5>Comments:</h5>
                     <ul>
-                        {comments.map((comment) => (
-                        <li key={comment.commentId}>
-                            <p>{comment.commentText}</p>
-                        </li>
+                        {comments && comments[post.postId] && comments[post.postId].map((comment) => (
+                            <li key={comment.commentId}>
+                                {/* comments render in here via mapping each comment to a post*/ }
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12}>
+                                        <p>{comment.customerId.name} : <i>{comment.commentText}</i></p>
+                                    </Grid>
+                                </Grid>
+                            </li>
                         ))}
                     </ul>
-
-                    <Button onClick={() => handleOpenCommentForm(post.postId)}>Add Comment</Button>
+                    
+                    {/* Add comment form */}
+                    {isLoggedin && <Button onClick={() => handleOpenCommentForm(post.postId)}>Add Comment</Button>}
                     {isCommentFormOpen === post.postId && (
                         <div>
                         <form onSubmit={(event) => handleSubmitComment(event, post.postId)}>
@@ -127,7 +162,7 @@ function PostList(props) {
             </ul>
 
             {/* Add new post */}
-            <Button onClick={handleOpenForm}>Add Post</Button>
+            {isLoggedin && <Button onClick={handleOpenForm}>Add Post</Button>}
 
             {/* Popup form */}
             {isFormOpen && (
@@ -139,6 +174,7 @@ function PostList(props) {
                     </form>
                 </div>
             )}
+            
         </div>
     );
 }

@@ -41,10 +41,10 @@ public class StaffMemberController {
     }
     
     // get a true or false if staff member credentials are correct
-    @GetMapping("/auth/{staffMemberId},{staffMemberEmail},{staffMemberPassword}")
-    public ResponseEntity<Boolean> getAuthStaffMemberById(@PathVariable Long staffMemberId, @PathVariable String staffMemberEmail, @PathVariable String staffMemberPassword) {
-        StaffMember staffMember = staffMemberService.getFullStaffMemberById(staffMemberId);
-        if (staffMember == null || !staffMember.getEmail().equals(staffMemberEmail) || !staffMember.getPassword().equals(staffMemberPassword)) {
+    @GetMapping("/auth/{staffMemberEmail},{staffMemberPassword}")
+    public ResponseEntity<Boolean> getAuthStaffMemberById( @PathVariable String staffMemberEmail, @PathVariable String staffMemberPassword) {
+        StaffMember staffMember = staffMemberService.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+        if (staffMember == null ) {
             return new ResponseEntity<>(false, HttpStatus.OK);
         }
         return new ResponseEntity<>(true, HttpStatus.OK);
