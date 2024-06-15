@@ -51,7 +51,7 @@ public class StaffMemberController {
     }
 
     // get a staff member data by username and password
-    @GetMapping("/{staffMemberEmail},{staffMemberPassword}")
+    @GetMapping("/{staffMemberEmail}/{staffMemberPassword}")
     public ResponseEntity<StaffMember> getAuthStaffMemberDataByUsernameAndPassword (@PathVariable String staffMemberEmail, @PathVariable String staffMemberPassword) {
         StaffMember staffMember = staffMemberService.getFullStaffMemberByEmailAndPassword(staffMemberEmail, staffMemberPassword);
         return new ResponseEntity<>(staffMember, HttpStatus.OK);

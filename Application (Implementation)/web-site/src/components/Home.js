@@ -37,7 +37,7 @@ const Home = () => {
   useEffect(() => {
     checkAuthLocal().then((response) => {
       if (response === true){
-        setSettings(['About', 'Logout'])
+        setSettings(['User Profile', 'Logout'])
         checkAuthLocal("staff").then((response) => {
           if (response){
             setPages(['Admin Tools'])
@@ -48,7 +48,8 @@ const Home = () => {
 
         setIsAuthChecked(true);
       }else{
-        setSettings(['About', 'Login'])
+        setSettings(['Login'])
+        setPages(['About'])
         setIsAuthChecked(true);
       }
     });
@@ -62,19 +63,20 @@ const Home = () => {
         {/* Include the Navbar component */}
         {isAuthChecked && <ResponsiveAppBar settings={settings} pages={pages}  />}
         <br />
-        
+
         <PageBanner text="Welcome to ForumHub" subtext="Click on a forum to view it." imgUrl="https://images.pexels.com/photos/6176069/pexels-photo-6176069.jpeg" />
         <br />
 
         <Container maxWidth="xl"> {/* Wrap the content in a Container component with maxWidth set to "xl" */}
           <Grid container spacing={2}>
             {Object.values(forums).length === 0 ? (
-              <p>No Forums Avaliable</p>
-            ) : (
-              Object.values(forums).map((forum) => (
+              // Display message if no forums are available
+                <p style={{ fontFamily: 'Roboto, sans-serif' }}>No Forums Available</p>
+              ) : (
+                Object.values(forums).map((forum) => (
                 <Grid item xs={12} md={2} key={forum.id}>
-                  <div className="forum-list-wrapper" style={{ overflowWrap: 'break-word' }}>
-                    {/* Include the Forum List component */}
+                  <div className="forum-list-wrapper" style={{ overflowWrap: 'break-word', fontFamily: 'Roboto, sans-serif' }}>
+                  {/* Include the Forum List component */}
                     <ForumList forums={[forum]} onForumClick={handleForumClick} />
                   </div>
                 </Grid>

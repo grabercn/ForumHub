@@ -47,6 +47,7 @@ function setAuthCookieValues(email, password) {
 function removeAuthCookieValues() {
     deleteCookie('email');
     deleteCookie('password');
+    return true;
 }
 
 function setUserDataCookieValues(userType, userName, userId) {
@@ -66,6 +67,7 @@ function removeUserDataCookieValues() {
     deleteCookie('userType');
     deleteCookie('userName');
     deleteCookie('userId');
+    return true;
 }
 
 function getAuthCookieValues() {

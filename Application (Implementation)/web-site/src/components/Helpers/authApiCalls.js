@@ -74,7 +74,7 @@ async function getCustomerByUsernameAndPassword(email, password) {
 
 // get staff id by email and password
 async function getStaffByUsernameAndPassword(email, password) {
-  const url = `http://localhost:8080/api/staff-members/${email},${password}`;
+  const url = `http://localhost:8080/api/staff-members/${email}/${password}`;
   try {
       const response = await fetch(url, {
           method: 'GET',
@@ -89,6 +89,7 @@ async function getStaffByUsernameAndPassword(email, password) {
 
       const data = await response.json();
       console.log("Staff Data:", data);
+      return data;
   } catch (error) {
       console.error("Error authenticating:", error);
   }

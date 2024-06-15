@@ -2,8 +2,7 @@ import * as React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { alpha, styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import ProductDetail from './ForumDetail';
-import { Grid, Button, Container, Dialog } from '@mui/material';
+import { getAllForums } from './Helpers/forumApiCalls';
 
 // Searchbar.js
 
@@ -14,14 +13,14 @@ function Searchbar() {
 
   // Function to handle search query
   const searchQuery = (query) => {
-    const product = getProductCookies().find((product) => product.name.toLowerCase() === query.toLowerCase());
-    if (product) {
-      setSearchResult(product);
-      console.log('Product found');
-    } else {
-      setSearchResult(null);
-      console.log('Product not found');
-    }   
+    getAllForums().then((response) => {
+      response.forEach((forum) => {
+        if (query !== (undefined || null || '') && forum.forumName.toLowerCase().includes(query.toLowerCase())) {
+          console.log(forum)
+          console.log(setSearchResult(forum));
+        }
+      });
+    });
   }
 
   // Search bar styling
@@ -71,7 +70,7 @@ function Searchbar() {
 
   // Return the search bar component
   return (
-    <div>
+    <div style={{zIndex: '1000'}}>
       <Search>
         <SearchIconWrapper>
           <SearchIcon />
@@ -80,18 +79,15 @@ function Searchbar() {
           placeholder="Search…"
           inputProps={{ 'aria-label': 'search' }}
           onChange={(event) => searchQuery(event.target.value)}
+          onFocus={(event) => setSearchResult(event.target.value)}
+          onFocusOut={() => setSearchResult(null)}
         />
       </Search>
       {searchResult && (
-          <Dialog open>
-            <Container maxWidth="page">
-            <Grid item xs={12} md={6}>
-              <ProductDetail product={searchResult} />
+              <div className="forum-list-wrapper" style={{ overflowWrap: 'break-word', position: 'absolute' }}>
+                {searchResult.forumName}
               <br />
-              <Button onClick={() => setSearchResult(false)}>Close</Button>
-            </Grid>
-            </Container>
-          </Dialog>
+              </div>
       )}
     </div>
   );
