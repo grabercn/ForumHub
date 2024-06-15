@@ -1,10 +1,9 @@
-import axios from 'axios';
 
 // File: auth.js
 // This file contains helper functions for authentication
 
 const checkStaffAuth = async (email, password) => {
-  const url = `http://localhost:8080/api/staff-members/auth/${Number(id)},${email},${password}`;
+  const url = `http://localhost:8080/api/staff-members/auth/${email},${password}`;
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -18,6 +17,7 @@ const checkStaffAuth = async (email, password) => {
     }
 
     const data = await response.json();
+    console.log("S Auth "+data);
     return data;
   } catch (error) {
     console.error("Error authenticating:", error);
@@ -25,27 +25,33 @@ const checkStaffAuth = async (email, password) => {
   }
 };
 
-const checkCustomerAuth = async (email, password) => {
-  const url = `http://localhost:8080/api/customers/auth/${Number(id)},${email},${password}`;
+async function checkCustomerAuth(email, password) {
+  const url = `http://localhost:8080/api/customers/auth/${email},${password}`;
   try {
-    const response = await axios.get(url);
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
 
-    if (response.status !== 200) {
+    if (!response.ok) {
       throw new Error(`API call failed with status ${response.status}`);
     }
 
-    const data = response.data;
+    const data = await response.json();
+    console.log("C Auth "+data);
     return data;
   } catch (error) {
     console.error("Error authenticating:", error);
     return null;
   }
-};
+}
 
-// IMPLEMENT THIS IN JAVA STILL
+
 // get customer id by email and password
-async function getCustomerId(email, password) {
-  const url = `http://localhost:8080/api/customers/auth/${email},${password}`;
+async function getCustomerByUsernameAndPassword(email, password) {
+  const url = `http://localhost:8080/api/customers/${email}/${password}`;
   try {
       const response = await fetch(url, {
           method: 'GET',
@@ -59,16 +65,39 @@ async function getCustomerId(email, password) {
       }
 
       const data = await response.json();
-      console.log("Customer ID:", data);
+      console.log("Customer Data:", data);
+      return data;
   } catch (error) {
       console.error("Error authenticating:", error);
   }
 }
 
-//checkStaffAuth(1, 'owen@gmail.com', 'password');
+// get staff id by email and password
+async function getStaffByUsernameAndPassword(email, password) {
+  const url = `http://localhost:8080/api/staff-members/${email},${password}`;
+  try {
+      const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+      });
+
+      if (!response.ok) {
+          throw new Error(`API call failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Staff Data:", data);
+  } catch (error) {
+      console.error("Error authenticating:", error);
+  }
+}
+
+//checkStaffAuth('owen@gmail.com', 'password');
 
 //checkCustomerAuth(1, 'owen@gmail.com', 'password').then((result) => {
 //  console.log(result);
 //})
 
-export { checkStaffAuth, checkCustomerAuth, getCustomerId};
+export { checkStaffAuth, checkCustomerAuth, getCustomerByUsernameAndPassword, getStaffByUsernameAndPassword};

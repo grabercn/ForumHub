@@ -1,6 +1,5 @@
-import { checkCustomerAuth, getCustomerId } from '../Helpers/authApiCalls.js';
+import { checkCustomerAuth, getCustomerByUsernameAndPassword, getStaffByUsernameAndPassword } from '../Helpers/authApiCalls.js';
 import { checkStaffAuth } from '../Helpers/authApiCalls.js';
-import { getStaffById } from '../Helpers/userApiCalls.js';
 
 // Function to set a cookie
 function setCookie(name, value, days) {
@@ -36,28 +35,43 @@ function checkCookie(name) {
     return cookieValue !== null;
 }
 
-function setAuthCookieValues(id, email, password) {
-    const userId = id    // Hardcoded for now
+function setAuthCookieValues(email, password) {
     const userEmail = email;
     const userPassword = password;
 
-    setCookie('id', userId, 0.1)
     setCookie('email', userEmail, 0.1);
     setCookie('password', userPassword, 0.1);
 }
 
 //remove auth cookie values
 function removeAuthCookieValues() {
-    deleteCookie('id');
     deleteCookie('email');
     deleteCookie('password');
+}
+
+function setUserDataCookieValues(userType, userName, userId) {
+    setCookie('userType', userType, 0.1);
+    setCookie('userName', userName, 0.1);
+    setCookie('userId', userId, 0.1);
+}
+
+function getUserDataCookieValues() {
+    const userType = getCookie('userType');
+    const userName = getCookie('userName');
+    const userId = getCookie('userId');
+    return { userType, userName, userId };
+}
+
+function removeUserDataCookieValues() {
+    deleteCookie('userType');
+    deleteCookie('userName');
+    deleteCookie('userId');
 }
 
 function getAuthCookieValues() {
     const userEmail = getCookie('email');
     const userPassword = getCookie('password');
-    const userId = Number(getCookie('id'));
-    return { userId, userEmail, userPassword };
+    return { userEmail, userPassword };
 }
 
 /**
@@ -69,9 +83,10 @@ async function checkCustomerAuthCookie() {
     return checkCustomerAuth(userEmail, userPassword)
         .then((customerAuth) => {
             if (customerAuth === true) {
-                getCustomerId(userEmail, userPassword).then((id) => {
-                    setAuthCookieValues(id, userEmail, userPassword);
+                getCustomerByUsernameAndPassword(userEmail, userPassword).then((customer) => {
+                    setUserDataCookieValues('customer', customer.name, customer.customerId);
                 });
+                setAuthCookieValues(userEmail, userPassword);
                 return true;
             } else {
                 //removeAuthCookieValues();
@@ -85,14 +100,13 @@ async function checkStaffAuthCookie() {
     return checkStaffAuth(userEmail, userPassword)
         .then((staffAuth) => {
             if (staffAuth === true) {
-                getStaffById(userEmail, userPassword).then((id) => {
-                    setAuthCookieValues(id, userEmail, userPassword);
+                getStaffByUsernameAndPassword(userEmail, userPassword).then((staff) => {
+                    setUserDataCookieValues('staff', staff.name, staff.id);
                 });
+                setAuthCookieValues(userEmail, userPassword);
                 return true;
-            } else {
-                //removeAuthCookieValues();
-                return false;
             }
+            return false;
         });
 }
 
@@ -122,4 +136,4 @@ function checkAuthLocal(userType) {
     });
 }
 
-export {  checkAuthLocal, setAuthCookieValues, getAuthCookieValues, checkCustomerAuthCookie, checkStaffAuthCookie, removeAuthCookieValues };
+export {  checkAuthLocal, setAuthCookieValues, getAuthCookieValues, checkCustomerAuthCookie, checkStaffAuthCookie, removeAuthCookieValues, setUserDataCookieValues, getUserDataCookieValues, removeUserDataCookieValues, setCookie, deleteCookie, getCookie, checkCookie};

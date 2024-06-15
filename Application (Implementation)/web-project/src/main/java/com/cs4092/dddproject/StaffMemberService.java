@@ -43,7 +43,8 @@ public class StaffMemberService {
 
     // Get full staff member by email and password
     public StaffMember getFullStaffMemberByEmailAndPassword(String email, String password) {
-        
+        StaffMember staffMember = staffMemberRepository.findByEmailAndPassword(email, password);
+        return staffMember;
     }
 
     // Find a staff member by ID

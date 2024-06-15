@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 // Use JpaRepository<StaffMember, Long> from private Long id; from StaffMember.java
 public interface StaffMemberRepository extends JpaRepository<StaffMember, Long> {
+
+    public StaffMember findByEmailAndPassword(String email, String password);
 }

@@ -1,7 +1,11 @@
 package com.cs4092.dddproject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class CustomerService {
@@ -34,5 +38,11 @@ public class CustomerService {
             return result;
         }
         return null;
+    }
+
+    // Get full customer by email and password
+    public Customer getFullCustomerByEmailAndPassword(String email, String password) {
+        Customer customer = customerRepository.findByEmailAndPassword(email, password);
+        return customer;
     }
 }

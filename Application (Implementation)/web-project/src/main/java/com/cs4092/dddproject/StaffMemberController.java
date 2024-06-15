@@ -35,22 +35,27 @@ public class StaffMemberController {
     public ResponseEntity<StaffMember> getStaffMemberById(@PathVariable Long staffMemberId) {
         StaffMember staffMember = staffMemberService.getStaffMemberById(staffMemberId); // Assuming getStaffMemberById exists in StaffMemberService
         if (staffMember == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(staffMember, HttpStatus.OK);
     }
     
     // get a true or false if staff member credentials are correct
     @GetMapping("/auth/{staffMemberEmail},{staffMemberPassword}")
-    public ResponseEntity<Boolean> getAuthStaffMemberById( @PathVariable String staffMemberEmail, @PathVariable String staffMemberPassword) {
-        StaffMember staffMember = staffMemberService.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    public ResponseEntity<Boolean> getAuthStaffMemberByUsernameAndPassword( @PathVariable String staffMemberEmail, @PathVariable String staffMemberPassword) {
+        StaffMember staffMember = staffMemberService.getFullStaffMemberByEmailAndPassword(staffMemberEmail, staffMemberPassword);
         if (staffMember == null ) {
             return new ResponseEntity<>(false, HttpStatus.OK);
         }
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
-
+    // get a staff member data by username and password
+    @GetMapping("/{staffMemberEmail},{staffMemberPassword}")
+    public ResponseEntity<StaffMember> getAuthStaffMemberDataByUsernameAndPassword (@PathVariable String staffMemberEmail, @PathVariable String staffMemberPassword) {
+        StaffMember staffMember = staffMemberService.getFullStaffMemberByEmailAndPassword(staffMemberEmail, staffMemberPassword);
+        return new ResponseEntity<>(staffMember, HttpStatus.OK);
+    }
 
     // Update a staff member (implement validation, error handling, and partial updates)
     @PutMapping("/{staffMemberId}")

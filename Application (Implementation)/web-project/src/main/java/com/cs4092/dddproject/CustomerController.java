@@ -29,13 +29,20 @@ public class CustomerController {
     }
 
     // get a true or false if customer credentials are correct
-    @GetMapping("/auth/{customerMemberId},{customerMemberEmail},{customerMemberPassword}")
-    public ResponseEntity<Boolean> getAuthCustomerMemberById(@PathVariable Long customerMemberId, @PathVariable String customerMemberEmail, @PathVariable String customerMemberPassword) {
-        Customer customer = customerService.getFullCustomerById(customerMemberId);
-        if (customer == null || !customer.getCustomerId().equals(customerMemberId) || !customer.getEmail().equals(customerMemberEmail) || !customer.getPassword().equals(customerMemberPassword)) {
+    @GetMapping("/auth/{customerEmail},{customerPassword}")
+    public ResponseEntity<Boolean> getCustomerByUsernameAndPassword( @PathVariable String customerEmail, @PathVariable String customerPassword) {
+        Customer customer = customerService.getFullCustomerByEmailAndPassword(customerEmail, customerPassword);
+        if (customer == null ) {
             return new ResponseEntity<>(false, HttpStatus.OK);
         }
         return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    // get customer data by username and password
+    @GetMapping("/{customerEmail}/{customerPassword}")
+    public ResponseEntity<Customer> getCustomerDataByUsernameAndPassword (@PathVariable String customerEmail, @PathVariable String customerPassword) {
+        Customer customer = customerService.getFullCustomerByEmailAndPassword(customerEmail, customerPassword);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
