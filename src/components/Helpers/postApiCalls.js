@@ -23,7 +23,7 @@ const addPost = async (postObject) => {
         }
 
         const data = await response.json();
-        console.log("Added post:", data);
+        ("Added post:", data);
     }
     catch(error) {
         console.error("Error adding post:", error);
@@ -43,7 +43,7 @@ const getPostsByForumId = async (forumId) => {
         }
 
         const data = await response.json();
-        console.log("Posts:", data);
+        ("Posts:", data);
         return data;
     }
     catch(error) {
@@ -62,7 +62,7 @@ const removePost = async (postId, forumId) => {
             throw new Error(`API call failed with status ${response.status}`);
         }
 
-        console.log("Post deleted successfully");
+        ("Post deleted successfully");
     }
     catch(error) {
         console.error("Error deleting post:", error);
@@ -81,7 +81,7 @@ const removeAllPostsByForumId = async (forumId) => {
             throw new Error(`API call failed with status ${response.status}`);
         }
 
-        console.log("Posts deleted successfully");
+        ("Posts deleted successfully");
     }
     catch(error) {
         console.error("Error deleting posts:", error);
@@ -101,7 +101,7 @@ const getPostById = async (postId) => {
         }
 
         const data = await response.json();
-        console.log("Post:", data);
+        ("Post:", data);
         return data;
     }
     catch(error) {

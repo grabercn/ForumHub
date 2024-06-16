@@ -21,7 +21,7 @@ const ForumDetail = (props) => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             {/* Display the forum name */}
-                  {console.log(forum)}
+                  {(forum)}
                   <Paper elevation={3} style={{ padding: '10px' }}>
                     <ForumBanner heading={forum.forumName} subheading={forum.forumDescription} imgUrl={forum.imgUrl}/>
                   </Paper>

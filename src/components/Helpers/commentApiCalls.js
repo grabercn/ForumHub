@@ -22,7 +22,7 @@ const addComment = async (postObject) => {
         }
 
         const data = await response.json();
-        console.log("Added comment:", data);
+        ("Added comment:", data);
     }
     catch(error) {
         console.error("Error adding post:", error);
@@ -41,7 +41,7 @@ const getAllCommentsByPostId = async (postId) => {
         }
 
         const data = await response.json();
-        console.log("Comments:", data);
+        ("Comments:", data);
         return data;
     }
     catch(error) {
@@ -60,7 +60,7 @@ const removeComment = async (postId) => {
             throw new Error(`API call failed with status ${response.status}`);
         }
 
-        console.log("Comment deleted successfully");
+        ("Comment deleted successfully");
     }
     catch(error) {
         console.error("Error deleting post:", error);
@@ -79,7 +79,7 @@ const removeAllCommentsByPostId = async (postId) => {
             throw new Error(`API call failed with status ${response.status}`);
         }
 
-        console.log("Comments deleted successfully");
+        ("Comments deleted successfully");
     }
     catch(error) {
         console.error("Error deleting comments:", error);

@@ -16,8 +16,8 @@ function Searchbar() {
     getAllForums().then((response) => {
       response.forEach((forum) => {
         if (query !== (undefined || null || '') && forum.forumName.toLowerCase().includes(query.toLowerCase())) {
-          console.log(forum)
-          console.log(setSearchResult(forum));
+          (forum)
+          (setSearchResult(forum));
         }
       });
     });

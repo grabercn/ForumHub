@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import MakePayments from './MakePayments';
 
 const ProcessCart = (products) => {
-    console.log('Processing cart');
+    ('Processing cart');
     return (
     <div>
         <Card variant="outlined">

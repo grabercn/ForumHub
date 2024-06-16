@@ -17,7 +17,7 @@ const checkStaffAuth = async (email, password) => {
     }
 
     const data = await response.json();
-    console.log("S Auth "+data);
+    ("S Auth "+data);
     return data;
   } catch (error) {
     console.error("Error authenticating:", error);
@@ -40,7 +40,7 @@ async function checkCustomerAuth(email, password) {
     }
 
     const data = await response.json();
-    console.log("C Auth "+data);
+    ("C Auth "+data);
     return data;
   } catch (error) {
     console.error("Error authenticating:", error);
@@ -65,7 +65,7 @@ async function getCustomerByUsernameAndPassword(email, password) {
       }
 
       const data = await response.json();
-      console.log("Customer Data:", data);
+      ("Customer Data:", data);
       return data;
   } catch (error) {
       console.error("Error authenticating:", error);
@@ -88,7 +88,7 @@ async function getStaffByUsernameAndPassword(email, password) {
       }
 
       const data = await response.json();
-      console.log("Staff Data:", data);
+      ("Staff Data:", data);
       return data;
   } catch (error) {
       console.error("Error authenticating:", error);
@@ -98,7 +98,7 @@ async function getStaffByUsernameAndPassword(email, password) {
 //checkStaffAuth('owen@gmail.com', 'password');
 
 //checkCustomerAuth(1, 'owen@gmail.com', 'password').then((result) => {
-//  console.log(result);
+//  (result);
 //})
 
 export { checkStaffAuth, checkCustomerAuth, getCustomerByUsernameAndPassword, getStaffByUsernameAndPassword};

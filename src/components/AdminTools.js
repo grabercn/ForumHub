@@ -62,7 +62,7 @@ const AdminTools = () => {
         event.preventDefault();
 
         forums = getAllForums();
-        console.log(forums);
+        (forums);
         
         setShowAddForumForm(false);
         window.location.reload()

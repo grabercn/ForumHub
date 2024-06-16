@@ -24,7 +24,7 @@ async function createForum(forumObject) {
         }
 
         const data = await response.json();
-        console.log("Forum created successfully:", data);
+        ("Forum created successfully:", data);
     }
     catch(error) {
         console.error("Error creating forum:", error);
@@ -43,7 +43,7 @@ async function getAllForums() {
         }
 
         const data = await response.json();
-        console.log("Forums:", data);
+        ("Forums:", data);
         return data;
     }
     catch(error) {
@@ -64,7 +64,7 @@ async function getForumById(forumId) {
         }
 
         const data = await response.json();
-        console.log("Forum:", data);
+        ("Forum:", data);
     }
     catch(error) {
         console.error("Error retrieving forum:", error);
@@ -84,7 +84,7 @@ async function getForumByName(forumName) {
         }
 
         const data = await response.json();
-        console.log("Forum:", data);
+        ("Forum:", data);
     }
     catch(error) {
         console.error("Error retrieving forum:", error);
@@ -120,7 +120,7 @@ async function updateForumById(forumId, forumObject) {
         }
 
         const data = await response.json();
-        console.log("Forum updated successfully:", data);
+        ("Forum updated successfully:", data);
     }
     catch(error) {
         console.error("Error updating forum:", error);
@@ -139,7 +139,7 @@ async function deleteForumById(forumId) {
             throw new Error(`API call failed with status ${response.status}`);
         }
 
-        console.log("Forum deleted successfully"); // Assuming successful deletion doesn't require a response body
+        ("Forum deleted successfully"); // Assuming successful deletion doesn't require a response body
     }
     catch(error) {
         console.error("Error deleting forum:", error);
