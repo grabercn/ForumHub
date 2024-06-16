@@ -30,19 +30,19 @@ const AdminTools = () => {
         var id = document.getElementById('id').value
 
         // Delete the forum from the API
-        try{
-            deleteForumById(id);
-            deletePostsByForumId(id);
-            deleteCommentsByForumId(id);
-            alert('Forum removed! Total forums: ' + Object.keys(forums).length-1);
-        }catch(e){
-            alert('Forum not found!');
-        }
+        //try{
+            //deleteForumById(id);
+            //deletePostsByForumId(id);
+            //deleteCommentsByForumId(id);
+            //alert('Forum removed! Total forums: ' + Object.keys(forums).length-1);
+        //}catch(e){
+            //alert('Forum not found!');
+        //}
 
         setShowRemoveForumForm(false);
 
         event.preventDefault();
-        location.reload()
+        window.location.reload()
     };
 
     const handleAddForum = (event) => {
