@@ -65,7 +65,7 @@ const AdminTools = () => {
         console.log(forums);
         
         setShowAddForumForm(false);
-        location.reload()
+        window.location.reload()
     };
 
     const handleAddShowForum = () => {
