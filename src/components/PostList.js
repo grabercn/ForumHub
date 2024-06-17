@@ -118,7 +118,7 @@ function PostList(props) {
     
     return (
         <div>
-            {isLoggedin && <h2>What will you post today, {CustomerName || 'Unknown'}?</h2>}
+            {isLoggedin && <h2>Welcome, {CustomerName || 'Unknown'}</h2>}
             <h3>Posts:</h3>
             <ul>
             {posts && (

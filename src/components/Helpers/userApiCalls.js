@@ -16,7 +16,7 @@ const staffObject = {
 };
 
 async function createCustomer(customerObject) {
-    const url = 'http://localhost:8080/api/customers';
+    const url = 'https://forumhubjavaservices.azurewebsites.net/api/customers';
     try {
       const response = await fetch(url, {
           method: 'POST',
@@ -41,7 +41,7 @@ async function createCustomer(customerObject) {
 // find a customer by id
 async function getCustomerById(customerId) {
     // Construct the URL with the customerId variable
-    const url = `http://localhost:8080/api/customers/${customerId}`;
+    const url = `https://forumhubjavaservices.azurewebsites.net/api/customers/${customerId}`;
     try {
         const response = await fetch(url, {
             method: 'GET'
@@ -63,7 +63,7 @@ async function getCustomerById(customerId) {
 // create a staff member
 
 async function createStaff(staffObject) {
-    const url = 'http://localhost:8080/api/staff-members';
+    const url = 'https://forumhubjavaservices.azurewebsites.net/api/staff-members';
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -88,7 +88,7 @@ async function createStaff(staffObject) {
 // find a staff member by id
 async function getStaffById(staffId) {
     // Construct the URL with the staffId variable
-    const url = `http://localhost:8080/api/staff-members/${Number(staffId)}`;
+    const url = `https://forumhubjavaservices.azurewebsites.net/api/staff-members/${Number(staffId)}`;
     try {
         const response = await fetch(url, {
             method: 'GET'

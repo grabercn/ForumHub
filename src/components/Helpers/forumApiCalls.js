@@ -9,7 +9,7 @@ const forumObject = {
 };
 
 async function createForum(forumObject) {
-    const url = 'http://localhost:8080/api/forums';
+    const url = 'http://forumhubjavaservices.azurewebsites.net/api/forums';
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -32,7 +32,7 @@ async function createForum(forumObject) {
 }
 
 async function getAllForums() {
-    const url = 'http://localhost:8080/api/forums';
+    const url = 'http://forumhubjavaservices.azurewebsites.net/api/forums';
     try {
         const response = await fetch(url, {
             method: 'GET'
@@ -53,7 +53,7 @@ async function getAllForums() {
 
 async function getForumById(forumId) {
     // Construct the URL with the forumId variable
-    const url = `http://localhost:8080/api/forums/${forumId}`;
+    const url = `http://forumhubjavaservices.azurewebsites.net/api/forums/${forumId}`;
     try {
         const response = await fetch(url, {
             method: 'GET'
@@ -73,7 +73,7 @@ async function getForumById(forumId) {
 
 async function getForumByName(forumName) {
     // Construct the URL with the forumName variable
-    const url = `http://localhost:8080/api/forums/search?name=${forumName}`;
+    const url = `http://forumhubjavaservices.azurewebsites.net/api/forums/search?name=${forumName}`;
     try {
         const response = await fetch(url, {
         method: 'GET'
@@ -105,7 +105,7 @@ async function updateForumById(forumId, forumObject) {
         price: 40.00
     }
     // Construct the URL with the forumId variable
-    const url = `http://localhost:8080/api/forums/${forumId}`;
+    const url = `http://forumhubjavaservices.azurewebsites.net/api/forums/${forumId}`;
     try {
         const response = await fetch(url, {
             method: 'PUT',
@@ -129,7 +129,7 @@ async function updateForumById(forumId, forumObject) {
 
 async function deleteForumById(forumId) {
     // Construct the URL with the forumId variable
-    const url = `http://localhost:8080/api/forums/${forumId}`;
+    const url = `http://forumhubjavaservices.azurewebsites.net/api/forums/${forumId}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE'
