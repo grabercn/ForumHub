@@ -17,7 +17,6 @@ const checkStaffAuth = async (email, password) => {
     }
 
     const data = await response.json();
-    ("S Auth "+data);
     return data;
   } catch (error) {
     console.error("Error authenticating:", error);
@@ -40,7 +39,6 @@ async function checkCustomerAuth(email, password) {
     }
 
     const data = await response.json();
-    ("C Auth "+data);
     return data;
   } catch (error) {
     console.error("Error authenticating:", error);
@@ -65,7 +63,6 @@ async function getCustomerByUsernameAndPassword(email, password) {
       }
 
       const data = await response.json();
-      ("Customer Data:", data);
       return data;
   } catch (error) {
       console.error("Error authenticating:", error);
@@ -88,7 +85,6 @@ async function getStaffByUsernameAndPassword(email, password) {
       }
 
       const data = await response.json();
-      ("Staff Data:", data);
       return data;
   } catch (error) {
       console.error("Error authenticating:", error);

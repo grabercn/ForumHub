@@ -9,7 +9,7 @@ const forumObject = {
 };
 
 async function createForum(forumObject) {
-    const url = 'http://forumhubjavaservices.azurewebsites.net/api/forums';
+    const url = 'https://forumhubjavaservices.azurewebsites.net/api/forums';
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -24,7 +24,6 @@ async function createForum(forumObject) {
         }
 
         const data = await response.json();
-        ("Forum created successfully:", data);
     }
     catch(error) {
         console.error("Error creating forum:", error);
@@ -32,10 +31,13 @@ async function createForum(forumObject) {
 }
 
 async function getAllForums() {
-    const url = 'http://forumhubjavaservices.azurewebsites.net/api/forums';
+    const url = 'https://forumhubjavaservices.azurewebsites.net/api/forums';
     try {
         const response = await fetch(url, {
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
 
         if (!response.ok) {
@@ -43,7 +45,6 @@ async function getAllForums() {
         }
 
         const data = await response.json();
-        ("Forums:", data);
         return data;
     }
     catch(error) {
@@ -64,7 +65,7 @@ async function getForumById(forumId) {
         }
 
         const data = await response.json();
-        ("Forum:", data);
+        return data;
     }
     catch(error) {
         console.error("Error retrieving forum:", error);
@@ -73,7 +74,7 @@ async function getForumById(forumId) {
 
 async function getForumByName(forumName) {
     // Construct the URL with the forumName variable
-    const url = `http://forumhubjavaservices.azurewebsites.net/api/forums/search?name=${forumName}`;
+    const url = `https://forumhubjavaservices.azurewebsites.net/api/forums/search?name=${forumName}`;
     try {
         const response = await fetch(url, {
         method: 'GET'
@@ -84,7 +85,6 @@ async function getForumByName(forumName) {
         }
 
         const data = await response.json();
-        ("Forum:", data);
     }
     catch(error) {
         console.error("Error retrieving forum:", error);
@@ -105,7 +105,7 @@ async function updateForumById(forumId, forumObject) {
         price: 40.00
     }
     // Construct the URL with the forumId variable
-    const url = `http://forumhubjavaservices.azurewebsites.net/api/forums/${forumId}`;
+    const url = `https://forumhubjavaservices.azurewebsites.net/api/forums/${forumId}`;
     try {
         const response = await fetch(url, {
             method: 'PUT',
@@ -118,9 +118,7 @@ async function updateForumById(forumId, forumObject) {
         if (!response.ok) {
             throw new Error(`API call failed with status ${response.status}`);
         }
-
         const data = await response.json();
-        ("Forum updated successfully:", data);
     }
     catch(error) {
         console.error("Error updating forum:", error);
@@ -129,7 +127,7 @@ async function updateForumById(forumId, forumObject) {
 
 async function deleteForumById(forumId) {
     // Construct the URL with the forumId variable
-    const url = `http://forumhubjavaservices.azurewebsites.net/api/forums/${forumId}`;
+    const url = `https://forumhubjavaservices.azurewebsites.net/api/forums/${forumId}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE'
@@ -138,8 +136,6 @@ async function deleteForumById(forumId) {
         if (!response.ok) {
             throw new Error(`API call failed with status ${response.status}`);
         }
-
-        ("Forum deleted successfully"); // Assuming successful deletion doesn't require a response body
     }
     catch(error) {
         console.error("Error deleting forum:", error);

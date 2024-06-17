@@ -31,7 +31,7 @@ async function createCustomer(customerObject) {
       }
 
       const data = await response.json();
-      ("Customer created successfully:", data);
+        console.log("Customer created successfully:", data);
   }
   catch(error) {
       console.error("Error creating customer:", error);
@@ -52,7 +52,6 @@ async function getCustomerById(customerId) {
         }
 
         const data = await response.json();
-        ("Customer:", data);
         return data;
     }
     catch(error) {
@@ -78,7 +77,7 @@ async function createStaff(staffObject) {
         }
 
         const data = await response.json();
-        ("Staff member created successfully:", data);
+        console.log("Staff member created successfully:", data);
     }
     catch(error) {
         console.error("Error creating staff member:", error);
@@ -99,7 +98,6 @@ async function getStaffById(staffId) {
         }
 
         const data = await response.json();
-        ("Staff member:", data);
         return data;
     }
     catch(error) {
