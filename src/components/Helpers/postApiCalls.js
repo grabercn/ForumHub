@@ -8,7 +8,7 @@ const postObject = {
 };
 
 const addPost = async (postObject) => {
-    const url = `http://localhost:8080/api/posts`;
+    const url = `https://forumhubjavaservices.azurewebsites.net/api/posts`;
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -32,7 +32,7 @@ const addPost = async (postObject) => {
 
 // get all posts for a forum
 const getPostsByForumId = async (forumId) => {
-    const url = `http://localhost:8080/api/posts/forum/${forumId}`;
+    const url = `https://forumhubjavaservices.azurewebsites.net/api/posts/forum/${forumId}`;
     try {
         const response = await fetch(url, {
             method: 'GET'
@@ -52,7 +52,7 @@ const getPostsByForumId = async (forumId) => {
 }
 
 const removePost = async (postId, forumId) => {
-    const url = `http://localhost:8080/api/posts/${postId}`;
+    const url = `https://forumhubjavaservices.azurewebsites.net/api/posts/${postId}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE'
@@ -71,7 +71,7 @@ const removePost = async (postId, forumId) => {
 
 // delete posts by forum id
 const removeAllPostsByForumId = async (forumId) => {
-    const url = `http://localhost:8080/api/posts/forum/${forumId}`;
+    const url = `https://forumhubjavaservices.azurewebsites.net/api/posts/forum/${forumId}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE'
@@ -90,7 +90,7 @@ const removeAllPostsByForumId = async (forumId) => {
 
 // get post by id
 const getPostById = async (postId) => {
-    const url = `http://localhost:8080/api/posts/${postId}`;
+    const url = `https://forumhubjavaservices.azurewebsites.net/api/posts/${postId}`;
     try {
         const response = await fetch(url, {
             method: 'GET'

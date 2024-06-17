@@ -7,7 +7,7 @@ const commentObject = {
 };
 
 const addComment = async (postObject) => {
-    const url = `http://localhost:8080/api/comments`;
+    const url = `https://forumhubjavaservices.azurewebsites.net/api/comments`;
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -30,7 +30,7 @@ const addComment = async (postObject) => {
 }
 
 const getAllCommentsByPostId = async (postId) => {
-    const url = `http://localhost:8080/api/comments/post/${postId}`;
+    const url = `https://forumhubjavaservices.azurewebsites.net/api/comments/post/${postId}`;
     try {
         const response = await fetch(url, {
             method: 'GET'
@@ -50,7 +50,7 @@ const getAllCommentsByPostId = async (postId) => {
 }
 
 const removeComment = async (postId) => {
-    const url = `http://localhost:8080/api/comments/${postId}`;
+    const url = `https://forumhubjavaservices.azurewebsites.net/api/comments/${postId}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE'
@@ -69,7 +69,7 @@ const removeComment = async (postId) => {
 
 // remove all commenets by post id
 const removeAllCommentsByPostId = async (postId) => {
-    const url = `http://localhost:8080/api/comments/post/${postId}`;
+    const url = `https://forumhubjavaservices.azurewebsites.net/api/comments/post/${postId}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE'
