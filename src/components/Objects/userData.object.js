@@ -1,5 +1,9 @@
-import { checkCustomerAuth, getCustomerByUsernameAndPassword, getStaffByUsernameAndPassword } from '../Helpers/authApiCalls.js';
-import { checkStaffAuth } from '../Helpers/authApiCalls.js';
+import { checkUserAuth, getUserByEmailAndPassword, getStaffByUsernameAndPassword, getUserRole } from '../Helpers/authApiCalls.js';
+
+//note: there is some ambiguity in the naming of cookies
+// username and userName are two different types
+// username is the username of the user
+// userName is the name of the user
 
 // Function to set a cookie
 function setCookie(name, value, days) {
@@ -50,22 +54,25 @@ function removeAuthCookieValues() {
     return true;
 }
 
-function setUserDataCookieValues(userType, userName, userId) {
+function setUserDataCookieValues(userType, userName, username, userId) {
     setCookie('userType', userType, 0.1);
     setCookie('userName', userName, 0.1);
+    setCookie('username', username, 0.1);
     setCookie('userId', userId, 0.1);
 }
 
 function getUserDataCookieValues() {
     const userType = getCookie('userType');
     const userName = getCookie('userName');
+    const username = getCookie('username');
     const userId = getCookie('userId');
-    return { userType, userName, userId };
+    return { userType, userName, username, userId };
 }
 
 function removeUserDataCookieValues() {
     deleteCookie('userType');
     deleteCookie('userName');
+    deleteCookie('username');
     deleteCookie('userId');
     return true;
 }
@@ -77,17 +84,23 @@ function getAuthCookieValues() {
 }
 
 /**
- * Checks the customer authentication cookie.
- * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the customer is authenticated or not.
+ * Checks the user authentication cookie.
+ * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the user is authenticated or not.
  */
-async function checkCustomerAuthCookie() {
+async function checkUserAuthCookie() {
     const { userEmail, userPassword } = getAuthCookieValues();
-    return checkCustomerAuth(userEmail, userPassword)
-        .then((customerAuth) => {
-            if (customerAuth === true) {
-                getCustomerByUsernameAndPassword(userEmail, userPassword).then((customer) => {
-                    setUserDataCookieValues('customer', customer.name, customer.customerId);
-                });
+    return checkUserAuth(userEmail, userPassword)
+        .then((userAuth) => {
+            if (userAuth === true) {
+                getUserByEmailAndPassword(userEmail, userPassword).then((user) => {
+                    getUserRole(user.username).then((response) => {
+                        if (response === 'admin') {
+                            setUserDataCookieValues('admin', user.name, user.username, user.userId);
+                        } else {
+                            setUserDataCookieValues('user', user.name, user.username, user.userId);
+                        }
+                    }
+                    )});
                 setAuthCookieValues(userEmail, userPassword);
                 return true;
             } else {
@@ -97,37 +110,30 @@ async function checkCustomerAuthCookie() {
         });
 }
 
-async function checkStaffAuthCookie() {
-    const { userEmail, userPassword } = getAuthCookieValues();
-    return checkStaffAuth(userEmail, userPassword)
-        .then((staffAuth) => {
-            if (staffAuth === true) {
-                getStaffByUsernameAndPassword(userEmail, userPassword).then((staff) => {
-                    setUserDataCookieValues('staff', staff.name, staff.id);
-                });
-                setAuthCookieValues(userEmail, userPassword);
-                return true;
-            }
-            return false;
-        });
-}
 
 // Function to check if the user is authenticated
 function checkAuthLocal(userType) {
     return new Promise((resolve, reject) => {
-        Promise.all([checkCustomerAuthCookie(), checkStaffAuthCookie()])
-            .then(([customerAuth, staffAuth]) => {
-                if (userType === 'customer' && customerAuth) {
-                    resolve(true);
-                } else if (userType === 'staff' && staffAuth) {
-                    resolve(true);
-                } else if (userType=== undefined) {
-                    if (customerAuth || staffAuth) {
+        Promise.all([checkUserAuthCookie()])
+            .then(([userAuth]) => {
+                console.log('User authenticated:', userAuth);
+                if (userAuth === true) {
+                    if (userType === undefined) {
                         resolve(true);
-                    } else {
-                        resolve(false);
-                    }    
+                    }else{
+                        const cookieValues = getUserDataCookieValues();
+                        getUserRole(cookieValues.username).then((response) => {
+                            console.log('User role:', response, userType);
+                            if (response === userType) {
+                                resolve(true);
+                            } else {
+                                resolve(false);
+                            }
+                        
+                        });
+                    }
                 } else {
+                    removeAuthCookieValues();
                     resolve(false);
                 }
             })
@@ -138,4 +144,4 @@ function checkAuthLocal(userType) {
     });
 }
 
-export {  checkAuthLocal, setAuthCookieValues, getAuthCookieValues, checkCustomerAuthCookie, checkStaffAuthCookie, removeAuthCookieValues, setUserDataCookieValues, getUserDataCookieValues, removeUserDataCookieValues, setCookie, deleteCookie, getCookie, checkCookie};
+export {  checkAuthLocal, setAuthCookieValues, getAuthCookieValues, checkUserAuthCookie, removeAuthCookieValues, setUserDataCookieValues, getUserDataCookieValues, removeUserDataCookieValues, setCookie, deleteCookie, getCookie, checkCookie};

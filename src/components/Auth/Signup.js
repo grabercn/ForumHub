@@ -1,90 +1,87 @@
-import { Grid, Input, Switch } from '@mui/material';
+import { Grid, Input, Switch, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { createCustomer, createStaff } from '../Helpers/userApiCalls';
+import Alert from '@mui/material/Alert';
+import { createUser, createStaff } from '../Helpers/userApiCalls';
 
 const Signup = () => {
     const [userName, setUserName] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
-
-    const handleToggleChange = () => {
-        setIsAdmin(!isAdmin);
-    }
+    
+    // Error states for form validation
+    const [nameError, setNameError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [password2Error, setPassword2Error] = useState(false);
+    const [phoneNumberError, setPhoneNumberError] = useState(false);
 
     const verifyFormData = (formData) => {
         // verify password and email format
+
+        setEmailError('');
+        setPasswordError('');
+        setPassword2Error('');
+        setNameError('');
+        setPhoneNumberError('');
         
-        var emailRegex = new RegExp('/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/');
-        var passwordRegex = new RegExp('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/');
-        var phoneNumberRegex = new RegExp('/^\d{10}$/');
-        var nameRegex = new RegExp('/^[a-zA-Z]+$/');
+        const emailRegex = /^[A-Za-z]{3}@(.+)$/;
+        const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/;
+        const phoneNumberRegex = /^\d{3}-\d{3}-\d{4}$/;
+        var error = false;
         
         if (formData.password !== formData.password2) {
-            alert('Passwords do not match.');
-            return false;
+            setPasswordError('Passwords do not match.');
+            setPassword2Error('Passwords do not match.');
+            error = true;
         }
 
-        //if (!emailRegex.test(formData.email)) {
+        if(formData.name.length === 0 || formData.name === '') {
+            setNameError('Name cannot be empty.');
+            error = true;
+        }
+    
+        if (!emailRegex.test(formData.email)) {
+            setEmailError('Invalid email format. (Ex owen@gmail.com) \n ');
+            error = true;
+        }
+    
+        if (!passwordRegex.test(formData.password)) {
+            setPasswordError('Invalid password format.');
+            error = true;
+        }
 
-        //    alert('Invalid email format.');
-        //    return false;
-        //}
-
-        //if (!passwordRegex.test(formData.password)) {
-        //    alert('Password must be between 6 and 20 characters and contain at least one numeric digit, one uppercase and one lowercase letter.');
-            //return false;
-        //}
-
-        //if (!phoneNumberRegex.test(formData.phoneNumber)) {
-            //alert('Invalid phone number format.');
-            //return false;
-        //}
-
-        //if (!nameRegex.test(formData.name)) {
-
-            //alert('Invalid name format.');
-           // return false;
-        //}
-
+        if (!passwordRegex.test(formData.password2)) {
+            setPassword2Error('Invalid password format.');
+            error = true;
+        }
+    
+        if (!phoneNumberRegex.test(formData.phoneNumber)) {
+            setPhoneNumberError('Invalid phone number format. (Ex 1234567890)');
+            error = true;
+        }
+        
+        if (error) {
+            return false;
+        }else{
         // If all checks pass, return true
         return true;
+        }
     }
 
     const handleCreateUser = (event) => {
         event.preventDefault(); // Prevent default form submission behavior
 
-        const userType = isAdmin ? 'admin' : 'customer';
-
-        const name = event.target[1].value;
-        const email = event.target[2].value;
-        const password = event.target[3].value;
-        const password2 = event.target[4].value;
-        const phoneNumber = event.target[5].value;
+        const name = event.target[0].value;
+        const email = event.target[1].value;
+        const password = event.target[2].value;
+        const password2 = event.target[3].value;
+        const phoneNumber = event.target[4].value;
 
         if (!verifyFormData({ name, email, password, password2, phoneNumber })) {
-            return;
-        }
-
-        if (userType === 'admin') {
-            // Create staff user here
-            
-            const staffObject = {
-                name: name,
-                email: email,
-                phoneNumber: phoneNumber,
-                password: password,
-            };
-
-            try {
-                createStaff(staffObject);
-                alert(`Created staff user with username: ${userName}.`);
-                window.location.reload();
-            } catch (error) {
-                alert(`Error creating staff user.`);
-            }
+            alert('Invalid form data.');
         } else {
-            const customerObject = {
+            const userObject = {
                 name: userName,
                 email: email,
                 phoneNumber: phoneNumber,
@@ -92,11 +89,11 @@ const Signup = () => {
             };
             
             try {
-                createCustomer(customerObject);
-                alert(`Created customer with username: ${userName}.`);
+                createUser(userObject);
+                alert(`Created user with username: ${userName}.`);
                 window.location.reload();
             } catch (error) {
-                alert(`Error creating customer.`);
+                alert(`Error creating user.`);
             }
         }
     }
@@ -117,32 +114,57 @@ const Signup = () => {
                 <form onSubmit={handleCreateUser}>
                     <Grid container direction="column" spacing={2}>
                         <Grid item>
-                            <label>
-                                Admin?
-                                <Switch 
-                                    checked={isAdmin}
-                                    onChange={handleToggleChange}
-                                />
-                            </label>
-                        </Grid>
-                        <Grid item>
-                            <Input 
+                            <TextField 
+                                error={nameError}
                                 value={userName} 
+                                helperText={nameError}
                                 onChange={(e) => setUserName(e.target.value)} 
                                 placeholder="Enter name"
                             />
                         </Grid>
                         <Grid item>
-                            <Input type="email" placeholder="Enter email" />
+                            <TextField 
+                                error={emailError} 
+                                helperText={emailError} 
+                                type="email" 
+                                placeholder="Enter email" 
+                            />
                         </Grid>
                         <Grid item>
-                            <Input type="password" placeholder="Enter password" />
+                            <TextField 
+                                error={passwordError} 
+                                helperText={passwordError} 
+                                name='password'
+                                type="password" 
+                                placeholder="Enter password" 
+                            />
                         </Grid>
                         <Grid item>
-                            <Input type="password" placeholder="Confirm password" />
+                            <Alert severity="info">Password Requirements:
+                                <ul>
+                                    <li>At least 8 characters</li>
+                                    <li>At least one uppercase letter</li>
+                                    <li>At least one lowercase letter</li>
+                                    <li>At least one special character</li>
+                                    <li>At least one number</li>
+                                </ul>
+                            </Alert>
                         </Grid>
                         <Grid item>
-                            <Input type="phoneNumber" placeholder="Enter phone number" />
+                            <TextField 
+                                error={password2Error} 
+                                helperText={password2Error} 
+                                type="password" 
+                                placeholder="Confirm password" 
+                            />
+                        </Grid>
+                        <Grid item>
+                            <TextField 
+                                error={phoneNumberError} 
+                                helperText={phoneNumberError} 
+                                type="phoneNumber" 
+                                placeholder="Enter phone number" 
+                            />
                         </Grid>
                         <Grid item>
                             <Button type="submit" variant="contained">

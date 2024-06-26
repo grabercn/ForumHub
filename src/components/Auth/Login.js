@@ -25,7 +25,7 @@ const Login = () => {
 
   const password = event.target.elements.password.value;
   const email = event.target.elements.email.value;
-  const userType = isAdmin ? "staff" : "customer";
+  const userType = isAdmin ? "admin" : "user";
 
   setAuthCookieValues(email, password);
   checkAuthLocal(userType).then((response) => {
@@ -53,13 +53,13 @@ const Login = () => {
             <h1>Login:</h1>
           </Grid>
           <Grid item>
-            <label htmlFor="userType">Admin?</label>
             <Switch
-              id="userType"
               checked={isAdmin}
               onChange={handleToggleChange}
+              inputProps={{ "aria-label": "controlled" }}
             />
-          </Grid>
+            Admin
+            </Grid>
           <Grid item>
             <TextField
               id="email"

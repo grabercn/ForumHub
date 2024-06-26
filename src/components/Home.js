@@ -33,21 +33,23 @@ const Home = () => {
 
   /* Include the Navbar component, renders based on user authentication */
   let appBarComponent = null;
-        
+  // check if user is authenticated and update navbar accordingly
   useEffect(() => {
     checkAuthLocal().then((response) => {
       if (response === true){
+        // user is authenticated
         setSettings(['User Profile', 'Logout'])
-        checkAuthLocal("staff").then((response) => {
+        checkAuthLocal("admin").then((response) => {
           if (response){
             setPages(['Admin Tools'])
           }else{
-            setPages([])
+            setPages(['About'])
           }
         });
 
         setIsAuthChecked(true);
       }else{
+        // user is not authenticated
         setSettings(['Login'])
         setPages(['About'])
         setIsAuthChecked(true);

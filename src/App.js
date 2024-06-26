@@ -1,14 +1,41 @@
 // App.js
-import React from 'react';
+import React, { useContext } from 'react';
 import PageRoutes from './PageRoutes';
 import Home from './components/Home';
+import { LoadingProvider } from './components/LoadingContext';
+import LoadingContext from './components/LoadingContext';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+
+const LoadingSpinner = () => {
+  const { loading } = useContext(LoadingContext);
+  return loading ? (
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        zIndex: 9999
+      }}
+    >
+      <CircularProgress />
+    </Box>
+  ) : null;
+};
 
 const App = () => {
   return (
-    <div>
-      <PageRoutes/>
-      <Home/>
-    </div>
+    <LoadingProvider>
+      <LoadingSpinner />
+      <PageRoutes />
+      <Home />
+    </LoadingProvider>
   );
 };
 

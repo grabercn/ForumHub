@@ -1,7 +1,7 @@
 import React from 'react';
 import { addPost } from './Helpers/postApiCalls';
 import { useEffect } from 'react';
-import { getCustomerById } from './Helpers/userApiCalls';
+import { getUserById } from './Helpers/userApiCalls';
 import { Input, Button, TextField, Grid } from '@mui/material';
 import { addComment, getAllCommentsByPostId } from './Helpers/commentApiCalls';
 import { getPostsByForumId  } from './Helpers/postApiCalls';
@@ -10,7 +10,7 @@ import { checkAuthLocal } from './Objects/userData.object';
 function PostList(props) {
 
     var forumId = props.forum.forumId;
-    var customerId = props.customerId;
+    var userId = props.userId;
 
     const [title, setTitle] = React.useState('');
     const [content, setContent] = React.useState('');
@@ -20,7 +20,7 @@ function PostList(props) {
     const [comments, setComments] = React.useState();
     const [comment, setComment] = React.useState('');
     const [isCommentFormOpen, setIsCommentFormOpen] = React.useState(null);
-    const [CustomerName, setCustomerName] = React.useState('');
+    const [UserName, setUserName] = React.useState('');
 
     const handleOpenForm = () => {
         setIsFormOpen(true);
@@ -48,7 +48,7 @@ function PostList(props) {
         const newComment = {
             commentText: comment,
             postId: postId,
-            customerId: customerId,
+            userId: userId,
         };
 
         addComment(newComment);
@@ -69,7 +69,7 @@ function PostList(props) {
             postSubject: title,
             postText: content,
             forumId: forumId,
-            customerId: customerId, // pass this in eventually, blank for now
+            userId: userId, // pass this in eventually, blank for now
         };
 
         // Call the addPost function from postApiCalls.js
@@ -92,10 +92,10 @@ function PostList(props) {
         });
     }, []);
 
-    // Get posts, comments, and customer name on load
+    // Get posts, comments, and user name on load
     useEffect(() => {
-        getCustomerById(customerId).then((data) => {
-            setCustomerName(data.name);
+        getUserById(userId).then((data) => {
+            setUserName(data.name);
         });
         getPostsByForumId(forumId).then((data) => { // Get posts by forumId
             
@@ -114,11 +114,11 @@ function PostList(props) {
                 });
             });
         });
-    }, [comment, forumId, customerId]);
+    }, [comment, forumId, userId]);
     
     return (
         <div>
-            {isLoggedin && <h2>Welcome, {CustomerName || 'Unknown'}</h2>}
+            {isLoggedin && <h2>Welcome, {UserName || 'Unknown'}</h2>}
             <h3>Posts:</h3>
             <ul>
             {posts && (
@@ -126,7 +126,7 @@ function PostList(props) {
                 <li key={post.postId}>
                     <div style={{ border: '1px solid black', padding: '10px', marginBottom: '10px' }}>
                     {/* Remove unnecessary useEffect (security issue) */}
-                    <p style={{ fontSize: '12px', fontStyle: 'italic' }}>{post.customerId.name || 'Unknown'}</p>
+                    <p style={{ fontSize: '12px', fontStyle: 'italic' }}>{post.userId.name || 'Unknown'}</p>
                     <h4 style={{ fontWeight: 'bold' }}>{post.postSubject}</h4>
                     <hr />
                     <p style={{ fontSize: '14px' }}>{post.postText}</p>
@@ -138,7 +138,7 @@ function PostList(props) {
                                 {/* comments render in here via mapping each comment to a post*/ }
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
-                                        <p>{comment.customerId.name} : <i>{comment.commentText}</i></p>
+                                        <p>{comment.userId.name} : <i>{comment.commentText}</i></p>
                                     </Grid>
                                 </Grid>
                             </li>
