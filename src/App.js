@@ -6,6 +6,7 @@ import { LoadingProvider } from './components/LoadingContext';
 import LoadingContext from './components/LoadingContext';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { Helmet } from 'react-helmet';
 
 const LoadingSpinner = () => {
   const { loading } = useContext(LoadingContext);

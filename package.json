@@ -14,6 +14,7 @@
     "axios": "^1.7.2",
     "bulma": "^0.9.4",
     "cors": "^2.8.5",
+    "helmet": "^7.1.0",
     "install": "^0.13.0",
     "json-server": "^1.0.0-alpha.23",
     "json-server-auth": "^2.1.0",
