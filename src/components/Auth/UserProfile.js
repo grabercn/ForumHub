@@ -10,7 +10,7 @@ const UserProfile = () => {
             <h2>Username: {getUserDataCookieValues().username}</h2>
             <h2>Email: {getAuthCookieValues().userEmail}</h2>
             <h2>Role: {getUserDataCookieValues().userType}</h2>
-            <h2>Customer ID: {getUserDataCookieValues().userId}</h2>
+            <h2>User ID: {getUserDataCookieValues().userId}</h2>
             
             </Container>
         </div>

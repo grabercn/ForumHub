@@ -129,6 +129,8 @@ function checkAuthLocal(userType) {
                             } else if (response === undefined || response === "") {
                                 resolve('error getting user role');
                             } else {
+                                removeUserDataCookieValues();
+                                removeAuthCookieValues();
                                 resolve(false);
                             }
                         
@@ -136,6 +138,7 @@ function checkAuthLocal(userType) {
                     }
                 } else {
                     removeAuthCookieValues();
+                    removeUserDataCookieValues();
                     resolve(false);
                 }
             })

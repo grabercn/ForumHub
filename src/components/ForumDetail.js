@@ -31,7 +31,7 @@ const ForumDetail = (forum) => {
             </div>
             
             {/* Display the posts in the forum */}
-            <PostList posts={forumDetail.posts} forum={forumDetail} customerId={1}/>
+            <PostList posts={forumDetail.posts} forum={forumDetail} userId={1}/>
           </Grid>
         </Grid>
       );

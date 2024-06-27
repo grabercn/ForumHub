@@ -1,11 +1,5 @@
 // Fetch all comments from the API
 
-const commentObject = {
-    commentText: 'Comment 1',
-    postId: 1,
-    customerId: 1
-};
-
 const addComment = async (postObject) => {
     const url = `https://forumhubjavaservices.azurewebsites.net/api/comments`;
     try {

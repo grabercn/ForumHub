@@ -1,12 +1,5 @@
 // Fetch all posts from the API
 
-const postObject = {
-    postSubject: 'Post 1',
-    postText: 'Text of post 1',
-    customerId: 1,
-    forumId: 1
-};
-
 const addPost = async (postObject) => {
     const url = `https://forumhubjavaservices.azurewebsites.net/api/posts`;
     try {

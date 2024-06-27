@@ -98,7 +98,7 @@ function PostList(props) {
     useEffect(() => {
         getUserById(userId).then((data) => {
             if (!data) return;
-            setUserName(data.name);
+            setUserName(data.username);
         });
         getPostsByForumId(forumId).then((data) => { // Get posts by forumId
             
