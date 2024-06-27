@@ -5,6 +5,7 @@ import PostList from './PostList';
 import ForumBanner from './ForumBanner';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import { getUserDataCookieValues } from './Objects/userData.object';
 
 // Product Detail Component
 // forum: The forum object to display details for
@@ -31,7 +32,7 @@ const ForumDetail = (forum) => {
             </div>
             
             {/* Display the posts in the forum */}
-            <PostList posts={forumDetail.posts} forum={forumDetail} userId={1}/>
+            <PostList posts={forumDetail.posts} forum={forumDetail} userId={getUserDataCookieValues().userId}/>
           </Grid>
         </Grid>
       );
