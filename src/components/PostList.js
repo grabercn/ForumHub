@@ -9,6 +9,8 @@ import { checkAuthLocal } from './Objects/userData.object';
 
 function PostList(props) {
 
+    console.log(props)
+
     var forumId = props.forum.forumId;
     var userId = props.userId;
 
@@ -95,10 +97,13 @@ function PostList(props) {
     // Get posts, comments, and user name on load
     useEffect(() => {
         getUserById(userId).then((data) => {
+            if (!data) return;
             setUserName(data.name);
         });
         getPostsByForumId(forumId).then((data) => { // Get posts by forumId
             
+            if (!data) return; // If no data, return (no posts to display
+
             setPosts(data); // Set posts state
            
             data.forEach((post) => { // For each post

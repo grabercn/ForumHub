@@ -123,7 +123,7 @@ function checkAuthLocal(userType) {
                     }else{
                         const cookieValues = getUserDataCookieValues();
                         getUserRole(cookieValues.username).then((response) => {
-                            console.log('User role:', response, userType);
+                    
                             if (response === userType) {
                                 resolve(true);
                             } else if (response === undefined || response === "") {

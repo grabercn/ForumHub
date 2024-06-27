@@ -9,31 +9,29 @@ import Paper from '@mui/material/Paper';
 // Product Detail Component
 // forum: The forum object to display details for
 // showCartButton: A blank (undefined) value to indicate whether or not to display the add to cart button
-const ForumDetail = (props) => {
-
+const ForumDetail = (forum) => {
 
   // Extract the forum object from the props
-  const forum = props.forum;
-
+  const forumDetail = forum.forum;
 
   // Return the forum details component
       return (
         <Grid container spacing={2}>
           <Grid item xs={12}>
             {/* Display the forum name */}
-                  {(forum)}
+                  {/* Display the forum banner */}
                   <Paper elevation={3} style={{ padding: '10px' }}>
-                    <ForumBanner heading={forum.forumName} subheading={forum.forumDescription} imgUrl={forum.imgUrl}/>
+                    <ForumBanner heading={forumDetail.forumName} subheading={forumDetail.forumDescription} imgUrl={forumDetail.imgUrl}/>
                   </Paper>
                   </Grid>
                   <Grid item xs={12}>
                   {/* Add any details you want to display in the popup*/}
             <div>
-              <p>id:<i>{forum.forumId}</i> Category: <i>{forum.forumCategory}</i></p>
+              <p>id:<i>{forumDetail.forumId}</i> Category: <i>{forumDetail.forumCategory}</i></p>
             </div>
             
             {/* Display the posts in the forum */}
-            <PostList posts={forum.posts} forum={forum} customerId={1}/>
+            <PostList posts={forumDetail.posts} forum={forumDetail} customerId={1}/>
           </Grid>
         </Grid>
       );
