@@ -4,7 +4,7 @@ import ForumDetail from "./ForumDetail"; // Assuming this is the correct import 
 import ForumList from "./ForumList";
 import ResponsiveAppBar from "./Navbar";
 import Container from '@mui/material/Container';
-import { Grid } from '@mui/material';
+import { Alert, Grid } from '@mui/material';
 import { forumsData as forumsData } from "./Objects/forumsData.objects";
 import PageBanner from "./PageBanner";
 import { checkAuthLocal } from "./Objects/userData.object";
@@ -64,16 +64,17 @@ const Home = () => {
       <div>
         {/* Include the Navbar component */}
         {isAuthChecked && <ResponsiveAppBar settings={settings} pages={pages}  />}
-        <br />
-
+        
+        {/* Include the PageBanner component */}
         <PageBanner text="Welcome to ForumHub" subtext="Click on a forum to view it." imgUrl="https://images.pexels.com/photos/6176069/pexels-photo-6176069.jpeg" />
+        
         <br />
-
+        <br />
         <Container maxWidth="xl"> {/* Wrap the content in a Container component with maxWidth set to "xl" */}
           <Grid container spacing={2}>
             {Object.values(forums).length === 0 ? (
-              // Display message if no forums are available
-                <p style={{ fontFamily: 'Roboto, sans-serif' }}>No Forums Available</p>
+              // Display message if no forums are available (bold alert)
+                <Alert severity="info"><strong>No forums available.</strong></Alert>
               ) : (
                 Object.values(forums).map((forum) => (
                 <Grid item xs={12} md={2} key={forum.id}>

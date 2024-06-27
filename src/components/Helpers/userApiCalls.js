@@ -25,11 +25,13 @@ async function createUser(userObject) {
 
       const data = await response.json();
         console.log("User created successfully:", data);
+        return data;
   }
   catch(error) {
       console.error("Error creating user:", error);
   }
 }
+
 
 // find a user by id
 async function getUserById(userId) {

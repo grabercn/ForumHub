@@ -1,4 +1,4 @@
-import { checkUserAuth, getUserByEmailAndPassword, getStaffByUsernameAndPassword, getUserRole } from '../Helpers/authApiCalls.js';
+import { checkUserAuth, getUserByEmailAndPassword, getUserRole } from '../Helpers/authApiCalls.js';
 
 //note: there is some ambiguity in the naming of cookies
 // username and userName are two different types
@@ -126,6 +126,8 @@ function checkAuthLocal(userType) {
                             console.log('User role:', response, userType);
                             if (response === userType) {
                                 resolve(true);
+                            } else if (response == undefined || response == "") {
+                                resolve('error getting user role');
                             } else {
                                 resolve(false);
                             }

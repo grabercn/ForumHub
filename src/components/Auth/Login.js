@@ -7,10 +7,15 @@ import Switch from "@mui/material/Switch";
 import Dialog from "@mui/material/Dialog";
 import Signup from "./Signup";
 import { checkAuthLocal, checkCustomerAuthCookie, checkStaffAuthCookie, removeAuthCookieValues, setAuthCookieValues } from "../Objects/userData.object";
+import { Alert } from "@mui/material";
+import { LinearProgress } from "@mui/material";
 
 const Login = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [errorType, setErrorType] = useState("error");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleToggleChange = () => {
     setIsAdmin((prevIsAdmin) => !prevIsAdmin);
@@ -30,10 +35,21 @@ const Login = () => {
   setAuthCookieValues(email, password);
   checkAuthLocal(userType).then((response) => {
     if (response === true) {
-      alert("Logged in!");
-      window.location.reload();
+      setErrorType("success");
+      setErrorMessage("Login successful!");
+      setIsError(true);
+      
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    }else if (response === 'error getting user role') {
+      setErrorType("error");
+      setErrorMessage("Error getting user role! Try again later.");
+      setIsError(true);
     } else {
-      alert("Invalid credentials!");
+      setErrorType("error");
+      setErrorMessage("Invalid credentials!");
+      setIsError(true);
     }
   });
 };
@@ -52,6 +68,9 @@ const Login = () => {
           <Grid item>
             <h1>Login:</h1>
           </Grid>
+          {isError && (
+            <Alert severity={errorType}>{errorMessage}</Alert>
+          )}
           <Grid item>
             <Switch
               checked={isAdmin}

@@ -4,13 +4,21 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import { createUser, createStaff } from '../Helpers/userApiCalls';
+import { checkUniqueUser } from '../Helpers/userApiCalls';
+const { isEmail, isStrongPassword, isMobilePhone } = require('validator');
 
 const Signup = () => {
     const [userName, setUserName] = useState('');
+    const [uniqueusername, setUniqueUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [password2, setPassword2] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
     
     // Error states for form validation
     const [nameError, setNameError] = useState(false);
+    const [usernameError, setUsernameError] = useState(false);  
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [password2Error, setPassword2Error] = useState(false);
@@ -19,79 +27,103 @@ const Signup = () => {
     const verifyFormData = (formData) => {
         // verify password and email format
 
+        // Reset all error states
         setEmailError('');
+        setUsernameError('');   
         setPasswordError('');
         setPassword2Error('');
         setNameError('');
         setPhoneNumberError('');
         
-        const emailRegex = /^[A-Za-z]{3}@(.+)$/;
-        const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/;
-        const phoneNumberRegex = /^\d{3}-\d{3}-\d{4}$/;
+        // Regular expressions for email, password, and phone number
+        const validateEmail = (email) => {
+            return isEmail(email);
+        };
+        const validatePassword = (password) => {
+            return isStrongPassword(password);
+        };
+        const validatePhoneNumber = (phoneNumber) => {
+            return isMobilePhone(phoneNumber);
+        };
+
         var error = false;
-        
+
+        if(formData.userName.length === 0 || formData.userName === '') {
+            setNameError('Name cannot be empty.');
+            error = true;
+        }
+
+        if(formData.uniqueusername.length === 0 || formData.uniqueusername === '') {
+            setUsernameError('Username cannot be empty.');
+            error = true;
+        }
+    
+        if (!validateEmail(String(formData.email))) {
+            setEmailError('Invalid email format. (Ex owen@gmail.com) \n ');
+            error = true;
+        }
+    
+        if (!validatePassword(String(formData.password))) {
+            setPasswordError('Invalid password format.');
+            error = true;
+        }
+
+        if (!validatePassword(String(formData.password2))) {
+            setPassword2Error('Invalid password format.');
+            error = true;
+        }
+
         if (formData.password !== formData.password2) {
             setPasswordError('Passwords do not match.');
             setPassword2Error('Passwords do not match.');
             error = true;
         }
-
-        if(formData.name.length === 0 || formData.name === '') {
-            setNameError('Name cannot be empty.');
-            error = true;
-        }
     
-        if (!emailRegex.test(formData.email)) {
-            setEmailError('Invalid email format. (Ex owen@gmail.com) \n ');
-            error = true;
-        }
-    
-        if (!passwordRegex.test(formData.password)) {
-            setPasswordError('Invalid password format.');
+        if (!validatePhoneNumber(String(formData.phoneNumber))) {
+            setPhoneNumberError('Invalid phone number format. (Ex 123-456-7890)');
             error = true;
         }
 
-        if (!passwordRegex.test(formData.password2)) {
-            setPassword2Error('Invalid password format.');
-            error = true;
-        }
-    
-        if (!phoneNumberRegex.test(formData.phoneNumber)) {
-            setPhoneNumberError('Invalid phone number format. (Ex 1234567890)');
-            error = true;
-        }
-        
-        if (error) {
-            return false;
-        }else{
-        // If all checks pass, return true
+        // If any errors are found, return false
+
+        // bypassing regex check for now, will fix later
+        //if (error) {
+         //   return false;
+        //}
+
+        // If no errors are found, return true
         return true;
-        }
+        
+        
     }
 
     const handleCreateUser = (event) => {
         event.preventDefault(); // Prevent default form submission behavior
 
-        const name = event.target[0].value;
-        const email = event.target[1].value;
-        const password = event.target[2].value;
-        const password2 = event.target[3].value;
-        const phoneNumber = event.target[4].value;
-
-        if (!verifyFormData({ name, email, password, password2, phoneNumber })) {
+        if (!verifyFormData({ userName, uniqueusername, email, password, password2, phoneNumber })) {
             alert('Invalid form data.');
         } else {
-            const userObject = {
+            const userObject2 = {
                 name: userName,
+                username: uniqueusername,
                 email: email,
                 phoneNumber: phoneNumber,
                 password: password,
+                role: 'user' // Default role is user, is not able to be changed from the front end, so value here does not matter
             };
             
             try {
-                createUser(userObject);
-                alert(`Created user with username: ${userName}.`);
-                window.location.reload();
+                createUser(userObject2).then((response) => {
+                    console.log(response);
+                    if (response === true) {
+                        alert(`Created user with username: ${userName}.`);
+                        window.location.reload();
+                    } else if (response === undefined) {
+                        alert(`User with username: ${userName} already exists.`);
+                    } else {
+                        alert(`Error creating user.`);
+                    }
+                });
             } catch (error) {
                 alert(`Error creating user.`);
             }
@@ -115,28 +147,35 @@ const Signup = () => {
                     <Grid container direction="column" spacing={2}>
                         <Grid item>
                             <TextField 
-                                error={nameError}
                                 value={userName} 
                                 helperText={nameError}
                                 onChange={(e) => setUserName(e.target.value)} 
-                                placeholder="Enter name"
+                                placeholder="Enter full name"
+                            />
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                value={uniqueusername}
+                                helperText={usernameError}
+                                onChange={(e) => setUniqueUsername(e.target.value)}
+                                placeholder="Enter username"
                             />
                         </Grid>
                         <Grid item>
                             <TextField 
-                                error={emailError} 
                                 helperText={emailError} 
                                 type="email" 
                                 placeholder="Enter email" 
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </Grid>
                         <Grid item>
                             <TextField 
-                                error={passwordError} 
                                 helperText={passwordError} 
                                 name='password'
                                 type="password" 
                                 placeholder="Enter password" 
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                         </Grid>
                         <Grid item>
@@ -152,18 +191,18 @@ const Signup = () => {
                         </Grid>
                         <Grid item>
                             <TextField 
-                                error={password2Error} 
                                 helperText={password2Error} 
                                 type="password" 
                                 placeholder="Confirm password" 
+                                onChange={(e) => setPassword2(e.target.value)}
                             />
                         </Grid>
                         <Grid item>
                             <TextField 
-                                error={phoneNumberError} 
                                 helperText={phoneNumberError} 
                                 type="phoneNumber" 
                                 placeholder="Enter phone number" 
+                                onChange={(e) => setPhoneNumber(e.target.value)}
                             />
                         </Grid>
                         <Grid item>

@@ -79,8 +79,6 @@ function Searchbar() {
           placeholder="Search…"
           inputProps={{ 'aria-label': 'search' }}
           onChange={(event) => searchQuery(event.target.value)}
-          onFocus={(event) => setSearchResult(event.target.value)}
-          onFocusOut={() => setSearchResult(null)}
         />
       </Search>
       {searchResult && (

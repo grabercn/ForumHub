@@ -2,7 +2,7 @@
 // Login Page for both users and staff members
 import React from 'react';
 import { removeAuthCookieValues, removeUserDataCookieValues } from '../Objects/userData.object';
-import { Container, Grid } from '@mui/material';
+import { Alert, Container, Grid, LinearProgress } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
 function Logout () {    
@@ -10,18 +10,20 @@ function Logout () {
             <div>
                 <Container maxWidth="md">
                 <Grid container spacing={2} direction="column">
-                    <h1>Logging out...</h1>
+                    <Grid item>
+                        <Alert severity="info">Logging out...</Alert>
+                    </Grid>
                     {/* Remove the auth cookie values */}
                 </Grid>
                 <center>
-                <CircularProgress /> {/* Add the CircularProgress component here */}
+                <LinearProgress />
                 </center>
                 
                 {/* Remove the auth cookie values and user data cookie values, then reload */}
                 {removeAuthCookieValues() && removeUserDataCookieValues() ? (
-                    window.location.reload()
+                    setTimeout (() => window.location.reload(), 2000)
                 ) : (
-                    console.error("Error logging out")
+                    alert("Error logging out, please try again later.")
                 )}
                 
                 </Container>
