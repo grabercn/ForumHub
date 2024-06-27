@@ -131,7 +131,7 @@ function PostList(props) {
                 <li key={post.postId}>
                     <div style={{ border: '1px solid black', padding: '10px', marginBottom: '10px' }}>
                     {/* Remove unnecessary useEffect (security issue) */}
-                    <p style={{ fontSize: '12px', fontStyle: 'italic' }}>{post.userId.name || 'Unknown'}</p>
+                    <p style={{ fontSize: '12px', fontStyle: 'italic' }}>{post.userId.username || 'Unknown'}</p>
                     <h4 style={{ fontWeight: 'bold' }}>{post.postSubject}</h4>
                     <hr />
                     <p style={{ fontSize: '14px' }}>{post.postText}</p>
@@ -143,7 +143,7 @@ function PostList(props) {
                                 {/* comments render in here via mapping each comment to a post*/ }
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
-                                        <p>{comment.userId.name} : <i>{comment.commentText}</i></p>
+                                        <p>{comment.userId.username} : <i>{comment.commentText}</i></p>
                                     </Grid>
                                 </Grid>
                             </li>
