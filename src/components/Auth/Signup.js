@@ -119,7 +119,7 @@ const Signup = () => {
                         alert(`Created user with username: ${userName}.`);
                         window.location.reload();
                     } else if (response === undefined) {
-                        alert(`User with username: ${userName} already exists.`);
+                        alert(`User with this (phone number, email, or username) already exists.`);
                     } else {
                         alert(`Error creating user.`);
                     }

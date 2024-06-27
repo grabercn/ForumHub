@@ -126,7 +126,7 @@ function checkAuthLocal(userType) {
                             console.log('User role:', response, userType);
                             if (response === userType) {
                                 resolve(true);
-                            } else if (response == undefined || response == "") {
+                            } else if (response === undefined || response === "") {
                                 resolve('error getting user role');
                             } else {
                                 resolve(false);
