@@ -31,11 +31,18 @@ const LoadingSpinner = () => {
 
 const App = () => {
   return (
+    <div>
+      {/* Add the Google AdSense script to the head */}
+      <Helmet>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6853203533491695"
+      crossorigin="anonymous"></script>
+      </Helmet>
     <LoadingProvider>
       <LoadingSpinner />
       <PageRoutes />
       <Home />
     </LoadingProvider>
+    </div>
   );
 };
 

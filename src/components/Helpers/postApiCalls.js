@@ -42,7 +42,7 @@ const getPostsByForumId = async (forumId) => {
     }
 }
 
-const removePost = async (postId, forumId) => {
+const removePost = async (postId) => {
     const url = `https://forumhubjavaservices.azurewebsites.net/api/posts/${postId}`;
     try {
         const response = await fetch(url, {

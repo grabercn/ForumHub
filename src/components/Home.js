@@ -8,6 +8,7 @@ import { Alert, Grid } from '@mui/material';
 import { forumsData as forumsData } from "./Objects/forumsData.objects";
 import PageBanner from "./PageBanner";
 import { checkAuthLocal } from "./Objects/userData.object";
+import GoogleAd from "./googleAd";
 
 const theme = createTheme({
   typography: {
@@ -90,6 +91,11 @@ const Home = () => {
             </Grid>
           </Grid>
         </Container>
+      </div>
+      <div>
+        {/* Include the Footer component */}
+        {/* <Footer /> */}
+        <GoogleAd />
       </div>
     </ThemeProvider>
   );

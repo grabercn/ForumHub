@@ -4,12 +4,10 @@ import { useEffect } from 'react';
 import { getUserById } from './Helpers/userApiCalls';
 import { Input, Button, TextField, Grid } from '@mui/material';
 import { addComment, getAllCommentsByPostId } from './Helpers/commentApiCalls';
-import { getPostsByForumId  } from './Helpers/postApiCalls';
+import { getPostsByForumId, removePost  } from './Helpers/postApiCalls';
 import { checkAuthLocal } from './Objects/userData.object';
 
 function PostList(props) {
-
-    console.log(props)
 
     var forumId = props.forum.forumId;
     var userId = props.userId;
@@ -126,16 +124,18 @@ function PostList(props) {
             {isLoggedin && <h2>Welcome, {UserName || 'Unknown'}</h2>}
             <h3>Posts:</h3>
             <ul>
+                {/* posts render in here via mapping each post to a list item*/}
             {posts && (
                 posts.map((post) => (
                 <li key={post.postId}>
                     <div style={{ border: '1px solid black', padding: '10px', marginBottom: '10px' }}>
-                    {/* Remove unnecessary useEffect (security issue) */}
+                    <Button style={{ float: 'left' }} onClick={() => removePost(post.postId)}>Delete</Button>
                     <p style={{ fontSize: '12px', fontStyle: 'italic' }}>{post.userId.username || 'Unknown'}</p>
                     <h4 style={{ fontWeight: 'bold' }}>{post.postSubject}</h4>
                     <hr />
                     <p style={{ fontSize: '14px' }}>{post.postText}</p>
 
+                    {/* Comments */}
                     <h5>Comments:</h5>
                     <ul>
                         {comments && comments[post.postId] && comments[post.postId].map((comment) => (
