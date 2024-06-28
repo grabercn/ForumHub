@@ -1,4 +1,4 @@
-import { Grid, Input, Switch, TextField } from '@mui/material';
+import { Container, Grid, Input, Switch, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -131,6 +131,7 @@ const Signup = () => {
     }
 
     return (
+        <Container maxWidth="md">
         <Grid container spacing={2} width={'page'}>
             <Box
                 width={500}
@@ -214,6 +215,7 @@ const Signup = () => {
                 </form>
             </Box>
         </Grid>
+        </Container>
     );
 }
 

@@ -82,6 +82,7 @@ const AdminTools = () => {
 
     return (
         <div>
+            <Container maxWidth='md'>
             <Box
                 height={500}
                 width={500}
@@ -204,6 +205,7 @@ const AdminTools = () => {
                     <Grid item xs={12}/>
                 </Grid>
             </Box>
+            </Container>
         </div>
     );
 };

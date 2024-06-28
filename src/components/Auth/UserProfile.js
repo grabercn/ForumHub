@@ -5,7 +5,7 @@ import { getAuthCookieValues, getUserDataCookieValues } from '../Objects/userDat
 const UserProfile = () => {
     return (
         <div>
-            <Container>
+            <Container maxWidth="md">
             <h1>Hello, {getUserDataCookieValues().userName}</h1>
             <h2>Username: {getUserDataCookieValues().username}</h2>
             <h2>Email: {getAuthCookieValues().userEmail}</h2>

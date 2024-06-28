@@ -258,6 +258,7 @@ function ResponsiveAppBar(props) {
       )}
       {showAbout && (
         <Dialog open={showAbout} onClose={() => setShowAbout(false)}>
+          <Container maxWidth="md">
           <Typography variant="h6" align="center">
             About
           </Typography>
@@ -267,6 +268,10 @@ function ResponsiveAppBar(props) {
           <Typography variant="body1" align="center">
             Created by Christian Graber based off DDD Project.
           </Typography>
+          <Typography variant="body1" align="center">
+            Version 1.0
+          </Typography>
+          </Container>
         </Dialog>
       )}
       {showUserProfile && (
