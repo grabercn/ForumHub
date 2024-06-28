@@ -6,8 +6,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { Helmet } from 'react-helmet';
 
+
 const LoadingSpinner = () => {
-  const { loading } = useContext(LoadingContext);
+  const { loading } = useContext(LoadingProvider);
   return loading ? (
     <Box
       sx={{
