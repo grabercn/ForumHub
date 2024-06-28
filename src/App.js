@@ -2,8 +2,6 @@ import React, { useContext } from 'react';
 import PageRoutes from './PageRoutes';
 import Home from './components/Home';
 import { LoadingProvider } from './components/LoadingContext';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 import { Helmet } from 'react-helmet';
 
 const App = () => {
