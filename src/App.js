@@ -1,9 +1,7 @@
-// App.js
 import React, { useContext } from 'react';
 import PageRoutes from './PageRoutes';
 import Home from './components/Home';
 import { LoadingProvider } from './components/LoadingContext';
-import LoadingContext from './components/LoadingContext';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { Helmet } from 'react-helmet';
@@ -33,17 +31,17 @@ const LoadingSpinner = () => {
 const App = () => {
   return (
     <div>
-      {/* Add the Google AdSense script to the head */}
       <Helmet>
+        {/* Add the Google AdSense script to the head */}
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6853203533491695"
-      crossorigin="anonymous"></script>
+                crossorigin="anonymous"></script>
+      </Helmet>
       
-    <LoadingProvider>
-      <LoadingSpinner />
-      <PageRoutes />
-      <Home />
-    </LoadingProvider>
-    </Helmet>
+      <LoadingProvider>
+        <LoadingSpinner />
+        <PageRoutes />
+        <Home />
+      </LoadingProvider>
     </div>
   );
 };
