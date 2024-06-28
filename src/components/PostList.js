@@ -2,10 +2,10 @@ import React from 'react';
 import { addPost } from './Helpers/postApiCalls';
 import { useEffect } from 'react';
 import { getUserById } from './Helpers/userApiCalls';
-import { Input, Button, TextField, Grid } from '@mui/material';
-import { addComment, getAllCommentsByPostId } from './Helpers/commentApiCalls';
+import { Input, Button, TextField, Grid, Alert } from '@mui/material';
+import { addComment, getAllCommentsByPostId, removeAllCommentsByPostId } from './Helpers/commentApiCalls';
 import { getPostsByForumId, removePost  } from './Helpers/postApiCalls';
-import { checkAuthLocal } from './Objects/userData.object';
+import { checkAuthLocal, getUserDataCookieValues } from './Objects/userData.object';
 
 function PostList(props) {
 
@@ -21,6 +21,7 @@ function PostList(props) {
     const [comment, setComment] = React.useState('');
     const [isCommentFormOpen, setIsCommentFormOpen] = React.useState(null);
     const [UserName, setUserName] = React.useState('');
+    const [admin, setAdmin] = React.useState(false);
 
     const handleOpenForm = () => {
         setIsFormOpen(true);
@@ -40,6 +41,12 @@ function PostList(props) {
 
     const handleCommentChange = (event, postId) => {
         setComment(event.target.value);
+    };
+
+    const handleRemovePost = (postId) => {
+        removeAllCommentsByPostId(postId);
+        removePost(postId);
+        setPosts(posts.filter((post) => post.postId !== postId));
     };
 
     const handleSubmitComment = (event, postId) => {
@@ -69,7 +76,8 @@ function PostList(props) {
             postSubject: title,
             postText: content,
             forumId: forumId,
-            userId: userId, // pass this in eventually, blank for now
+            userId: userId,
+            postDate: new Date().toISOString(), // generated in backend so value here does not matter
         };
 
         // Call the addPost function from postApiCalls.js
@@ -90,6 +98,13 @@ function PostList(props) {
                 setIsLoggedin(false);
             }
         });
+        checkAuthLocal('admin').then((response) => {
+            if (response === true){
+                setAdmin(true);
+            }else{
+                setAdmin(false);
+            }
+        });
     }, []);
 
     // Get posts, comments, and user name on load
@@ -100,7 +115,9 @@ function PostList(props) {
         });
         getPostsByForumId(forumId).then((data) => { // Get posts by forumId
             
-            if (!data) return; // If no data, return (no posts to display
+            if (!data) {
+                return alert("No posts found");
+            }
 
             setPosts(data); // Set posts state
            
@@ -121,7 +138,7 @@ function PostList(props) {
     
     return (
         <div>
-            {isLoggedin && <h2>Welcome, {UserName || 'Unknown'}</h2>}
+            {isLoggedin && <h2>Welcome, {getUserDataCookieValues().userName || 'Unknown'}</h2>}
             <h3>Posts:</h3>
             <ul>
                 {/* posts render in here via mapping each post to a list item*/}
@@ -129,7 +146,12 @@ function PostList(props) {
                 posts.map((post) => (
                 <li key={post.postId}>
                     <div style={{ border: '1px solid black', padding: '10px', marginBottom: '10px' }}>
-                    <Button style={{ float: 'left' }} onClick={() => removePost(post.postId)}>Delete</Button>
+                    
+                    {/* display remove post button if user who created post is logged in */}
+                    {isLoggedin && (Number(post.userId.userId) === Number(userId)) && <Button style={{color: 'red', fontSize: '12px', float: 'right' }} onClick={() => handleRemovePost(post.postId)}>Delete</Button>}
+                    {/* display remove post button if user is admin using checkAuthLocal */}
+                    {isLoggedin && admin && <Button style={{color: 'red', fontSize: '12px', float: 'right' }} onClick={() => handleRemovePost(post.postId)}>Delete</Button>}
+
                     <p style={{ fontSize: '12px', fontStyle: 'italic' }}>{post.userId.username || 'Unknown'}</p>
                     <h4 style={{ fontWeight: 'bold' }}>{post.postSubject}</h4>
                     <hr />

@@ -32,8 +32,6 @@ const Home = () => {
     setForums(forumsData); // Update forums with the latest data from forumsData
   }, [forumsData]);
 
-  /* Include the Navbar component, renders based on user authentication */
-  let appBarComponent = null;
   // check if user is authenticated and update navbar accordingly
   useEffect(() => {
     checkAuthLocal().then((response) => {
@@ -42,7 +40,7 @@ const Home = () => {
         setSettings(['User Profile', 'Logout'])
         checkAuthLocal("admin").then((response) => {
           if (response){
-            setPages(['Admin Tools'])
+            setPages(['Admin Tools', 'About'])
           }else{
             setPages(['About'])
           }
