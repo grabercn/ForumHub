@@ -136,7 +136,10 @@ async function deleteForumById(forumId) {
         if (!response.ok) {
             throw new Error(`API call failed with status ${response.status}`);
         }
+        const data = await response.json();
+        return data;
     }
+    
     catch(error) {
         console.error("Error deleting forum:", error);
     }
